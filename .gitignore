@@ -1,0 +1,56 @@
+# General
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyzw
+
+# Environment
+.venv/
+env/
+*.env
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-*
+
+# Dependency directories
+lib/
+bin/
+include/
+lib64/
+share/
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Database files
+*.db
+*.sqlite3
+*.db-journal
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
