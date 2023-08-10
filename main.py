@@ -5,16 +5,20 @@ from NLP.detailextract import analyze_advertisement
 from Database.connecctor import add_advertisement
 from Database.connecctor import get_all_advertisement
 import threading
+from NLP.webScaper import extract_article_text
 
 app = Flask(__name__)
 
 @app.route('/members', methods=['POST'])
 def members():
     inp = request.json.get("inp")
-    print(inp)
+    print(inp) # this is the URl
     try:
-        article_data = scrape_article_data(inp)
-        location, category, contact_info, prices = analyze_advertisement(article_data)
+        # article_data = scrape_article_data(inp)
+        # print("link is ",article_data) this is wrong
+
+        
+        location, category, contact_info, prices = analyze_advertisement(inp)
         ad_data = {
             "location": location,
             "category": category,
@@ -24,8 +28,8 @@ def members():
         }
         
         # Create a new thread for the add_advertisement function
-        thread = threading.Thread(target=add_advertisement, args=(ad_data,))
-        thread.start()
+        # thread = threading.Thread(target=add_advertisement, args=(ad_data,))
+        # thread.start()
 
         # Create a JSON response with the required headers
         return jsonify(ad_data)
