@@ -23,8 +23,8 @@ def extract_price(text):
         price_value = float(usd_price[0])
         prices.append(("USD", price_value))
 
-    print(text)
-    print(prices)
+    # print(text)
+    # print(prices)
 
     if len(prices) == 0:
         return None

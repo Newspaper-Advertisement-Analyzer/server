@@ -3,6 +3,7 @@ import spacy
 import re
 from NLP.getPhoneNumbers import extract_phone_num
 from NLP.getPrices import extract_price
+from NLP.getLocations import extract_locations
 from NLP.webScaper import extract_paragraphs_and_list_items
 from NLP.webScaper import extract_article_text
 
@@ -26,7 +27,7 @@ def extract_email_addresses(text):
 #     return re.findall(r'Rs\s*(\d+(\.\d{1,2})?)\s*mn', text)
 
 def categorize_advertisement(advertisement_text):
-    category = None
+    category = ["Couldn't found a category"]
 
     # Check for common keywords to categorize the advertisement
     keywords_to_category = {
@@ -48,18 +49,18 @@ def categorize_advertisement(advertisement_text):
 def analyze_advertisement(advertisement_URL):
     advertisement_text = extract_article_text(advertisement_URL)
 
-    entities = NER(advertisement_text).ents
-    location = None
     category = categorize_advertisement(advertisement_text)
     contact_info = {
         "phone_numbers": [],
         "email_addresses": []
     }
 
+    # entities = NER(advertisement_text).ents
     
-    for ent in entities:
-        if ent.label_ == 'GPE':  # GPE label indicates locations
-            location = ent.text.strip()
+    # location = None
+    # for ent in entities:
+    #     if ent.label_ == 'GPE':  # GPE label indicates locations
+    #         location = ent.text.strip()
 
     if extract_phone_num(advertisement_text) is not None:
         contact_info["phone_numbers"] = extract_phone_num(advertisement_text)
@@ -79,13 +80,18 @@ def analyze_advertisement(advertisement_URL):
         if extract_price(new_text) is not None:
             prices = extract_price(new_text)
         else:
-            "No price found"
+            prices = ["No price found"]
 
-    contact_info["phone_numbers"] = extract_phone_num(advertisement_text)
+    location = extract_locations(advertisement_text)
 
+    # contact_info["phone_numbers"] = extract_phone_num(advertisement_text)
+    # contact_info["email_addresses"] = extract_email_addresses(advertisement_text)
 
+    print("Location: ", location)
+    print("Category: ", category)
+    print("Contact info: ", contact_info)
+    print("Prices: ", prices)
 
-
-    contact_info["email_addresses"] = extract_email_addresses(advertisement_text)
+    # location = ["no location"]
 
     return location, category, contact_info, prices
