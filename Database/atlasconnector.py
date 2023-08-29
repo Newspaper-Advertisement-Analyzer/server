@@ -1,8 +1,14 @@
 from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
+from dotenv import load_dotenv
+import os
+load_dotenv('Database\.env')
 
-client = MongoClient("mongodb+srv://nadun:nadun2001@cluster0.lemvb4s.mongodb.net/")
+username: str = os.getenv('DBUSERNAME')
+password: str = os.getenv('PASSWORD')
+
+client = MongoClient("mongodb+srv://"+username+":"+password +"@cluster0.lemvb4s.mongodb.net/")
 db = client.server_db
 ad_collection = db.ad_collection
 

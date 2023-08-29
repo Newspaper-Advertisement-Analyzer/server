@@ -6,10 +6,11 @@ from Database.connecctor import add_advertisement
 from Database.connecctor import get_all_advertisement
 import threading
 from NLP.webScaper import extract_article_text
+from flask import Flask,make_response,send_from_directory
 
 app = Flask(__name__)
 
-@app.route('/members', methods=['POST'])
+@app.route('/members', methods=['POST','GET'])
 def members():
     inp = request.json.get("inp")
     print(inp) # this is the URl
@@ -28,8 +29,7 @@ def members():
         }
         
         # Create a new thread for the add_advertisement function
-        # thread = threading.Thread(target=add_advertisement, args=(ad_data,))
-        # thread.start()
+        add_advertisement(ad_data)
 
         # Create a JSON response with the required headers
         return jsonify(ad_data)
@@ -53,10 +53,16 @@ def process_image():
 
 @app.route("/get_marker_locations", methods=['GET'])
 def get_markers():
-    print("hi")
     markers = get_all_advertisement()
-    print(markers)
     return jsonify(markers)
+
+@app.route('/serviceWorker.js')
+def get_service_worker():
+    #in this case serviceWorker.js is stored in the root of the project
+    #You can enter the name of directory in which this file is stored
+    response = make_response(send_from_directory('','serviceWorker.js'))
+    response.headers['Content-Type'] = 'application/javascript'
+    return response
 
 
 if __name__ == '__main__':
