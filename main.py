@@ -22,11 +22,13 @@ def members():
         
         location, category, contact_info, prices = analyze_advertisement(inp)
         ad_data = {
+            "position": "Default",
+            "name": "Default",
             "location": location,
             "category": category,
-            "phone_numbers": contact_info["phone_numbers"],
-            "email_addresses": contact_info["email_addresses"],
-            "prices": prices
+            "phoneNumber": contact_info["phone_numbers"],
+            "email": contact_info["email_addresses"],
+            "price": prices
         }
         
         # Create a new thread for the add_advertisement function

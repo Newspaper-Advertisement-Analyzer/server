@@ -1,15 +1,15 @@
 beautifulsoup4==4.12.2
-blinker==1.6.2
+# blinker==1.6.2
 blis==0.7.10
 catalogue==2.0.9
 certifi==2023.7.22
-charset-normalizer==3.2.0
-click==8.1.6
-colorama==0.4.6
+# charset-normalizer==3.2.0
+# click==8.1.6
+# colorama==0.4.6
 confection==0.1.0
-cssselect==1.2.0
+# cssselect==1.2.0
 cymem==2.0.7
-dnspython==2.4.1
+# dnspython==2.4.1
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.6.0/en_core_web_sm-3.6.0-py3-none-any.whl#sha256=83276fc78a70045627144786b52e1f2728ad5e29e5e43916ec37ea9c26a11212
 feedfinder2==0.0.4
 feedparser==6.0.10
