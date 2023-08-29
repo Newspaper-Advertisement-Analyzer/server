@@ -4,8 +4,8 @@ import re
 from NLP.getPhoneNumbers import extract_phone_num
 from NLP.getPrices import extract_price
 from NLP.getLocations import extract_locations
-from NLP.webScaper import extract_paragraphs_and_list_items
-from NLP.webScaper import extract_article_text
+from NLP.oldwebScaper import extract_paragraphs_and_list_items
+from NLP.oldwebScaper import extract_article_text
 
 # Uncomment the line below if you haven't downloaded the model already
 #spacy.cli.download("en_core_web_sm")

@@ -6,7 +6,8 @@ from Database.connecctor import add_advertisement
 from Database.connecctor import get_all_advertisement
 from Database.userSignUp import add_user,find_user,validate_user
 import threading
-from NLP.webScaper import extract_article_text
+# from NLP.oldwebScaper import extract_article_text
+from NLP.webScraper import extract_article_info
 
 app = Flask(__name__)
 
@@ -51,9 +52,6 @@ def process_image():
     extracted_text = extract_text_from_image(image_path)
     return jsonify({'extracted_text': extracted_text})
 
-
-
-
 @app.route("/get_marker_locations", methods=['GET'])
 def get_markers():
     print("hi")
@@ -75,7 +73,7 @@ def signup():
         return jsonify({"error": "Email already exists"}), 409
         
     success = add_user(name,email,password)
-    print("success: ", success)
+    print("success: ", success)     
     if success:
         return jsonify({"message": "Success! You are now registered."})
     else:
@@ -118,6 +116,41 @@ def login_user():
     else:
         print("Incorrect Password")
         return jsonify({"error": "Incorrect Password"}), 401
+
+@app.route('/sendurl', methods=['POST'])
+def receive_url_from_frontend():
+    data = request.get_json()
+    url = data.get('url')
+
+    results = extract_article_info(url)
+
+    print(url)
+
+    return jsonify({'results': results})
+
+from werkzeug.utils import secure_filename
+import os
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    print("upload image is called")
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image part'})
+
+    image = request.files['image']
+
+    if image.filename == '':
+        # set a name for the image
+        image.filename = 'image.jpg'
+        return jsonify({'error': 'No name but saved as image.jpg'})
+        # return jsonify({'error': 'No selected image'})
+
+    filename = secure_filename(image.filename)
+    image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return jsonify({'message': 'Image uploaded successfully'})
+
 
 
 if __name__ == '__main__':
