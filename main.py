@@ -16,16 +16,18 @@ def members():
         article_data = scrape_article_data(inp)
         location, category, contact_info, prices = analyze_advertisement(article_data)
         ad_data = {
+            "position": "Default",
+            "name": "Default",
             "location": location,
             "category": category,
-            "phone_numbers": contact_info["phone_numbers"],
-            "email_addresses": contact_info["email_addresses"],
-            "prices": prices
+            "phoneNumber": contact_info["phone_numbers"],
+            "email": contact_info["email_addresses"],
+            "price": prices
         }
         
         # Create a new thread for the add_advertisement function
-        thread = threading.Thread(target=add_advertisement, args=(ad_data,))
-        thread.start()
+        # thread = threading.Thread(target=add_advertisement, args=(ad_data,))
+        # thread.start()
 
         # Create a JSON response with the required headers
         return jsonify(ad_data)
