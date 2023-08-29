@@ -4,17 +4,22 @@ from NLP.pdf_to_text import extract_text_from_image
 from NLP.detailextract import analyze_advertisement
 from Database.connecctor import add_advertisement
 from Database.connecctor import get_all_advertisement
+from Database.userSignUp import add_user,find_user,validate_user
 import threading
+from NLP.webScaper import extract_article_text
 
 app = Flask(__name__)
 
 @app.route('/members', methods=['POST'])
 def members():
     inp = request.json.get("inp")
-    print(inp)
+    print(inp) # this is the URl
     try:
-        article_data = scrape_article_data(inp)
-        location, category, contact_info, prices = analyze_advertisement(article_data)
+        # article_data = scrape_article_data(inp)
+        # print("link is ",article_data) this is wrong
+
+        
+        location, category, contact_info, prices = analyze_advertisement(inp)
         ad_data = {
             "position": "Default",
             "name": "Default",
@@ -55,6 +60,64 @@ def get_markers():
     markers = get_all_advertisement()
     print(markers)
     return jsonify(markers)
+
+@app.route("/signup", methods=["POST"])
+def signup():
+    email = request.json["email"]
+    password = request.json["password"]
+    name = request.json["name"]
+
+    print("------------------signup code is called------------------")
+    print(email, password,name)
+
+    # add user to the data base
+    if find_user(email) is not None :
+        return jsonify({"error": "Email already exists"}), 409
+        
+    success = add_user(name,email,password)
+    print("success: ", success)
+    if success:
+        return jsonify({"message": "Success! You are now registered."})
+    else:
+        return jsonify({"error": "Error in registering"}), 500
+
+    # verification_code = random.randint(100000, 999999)  # generate_random_code()  # Generate a verification code
+    # expiration_time = datetime.now() + timedelta(minutes=1)
+    # verification_codes[email] = {
+    #     "code": verification_code, "expiration_time": expiration_time}
+
+    # print("verification code: ", verification_code)
+
+    # if (want_send_email):
+    #     sendMail(email, verification_code)
+
+
+    # return jsonify({
+    #     "email": new_user["email"]
+    # })
+
+@app.route("/login", methods=["POST"])
+def login_user():
+    email = request.json["email"]
+    password = request.json["password"]
+
+    print("------------------login code is called------------------")
+    print("email: ", email, "\n", "Pasword: ", password, "\n")
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
+    user = find_user(email)
+    if user is None:
+        print("Invalid User Name")
+        return jsonify({"error": "Invalid User Name"}), 401
+
+    if validate_user(email, password):
+        print("Correct Password")
+        return jsonify({"message": "Success! You are now logged in."})
+    else:
+        print("Incorrect Password")
+        return jsonify({"error": "Incorrect Password"}), 401
 
 
 if __name__ == '__main__':
