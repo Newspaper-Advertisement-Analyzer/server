@@ -5,12 +5,10 @@ from email.mime.text import MIMEText
 import os
 from dotenv import load_dotenv
 
-load_dotenv('..env')
+load_dotenv('./.env')
 
 FROM_EMAIL: str = os.getenv('EMAIL')
 PASSWORD: str = os.getenv('EMAILPASSWORD')
-# EMAIL="kodeblitz@outlook.com"
-# EMAILPASSWORD="9HX)T2Y%[waYx~9#~{388${n]jk@gc%v"
 
 
 def send_advanced_email(user_email, verification_code):
@@ -59,4 +57,3 @@ def send_advanced_email(user_email, verification_code):
     except Exception as e:
         print(f"Error sending email: {str(e)}")
 
-send_advanced_email("lisives254@trazeco.com",123)
