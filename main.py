@@ -4,10 +4,18 @@ from NLP.pdf_to_text import extract_text_from_image
 from NLP.detailextract import analyze_advertisement
 from Database.connecctor import add_advertisement
 from Database.connecctor import get_all_advertisement
-from Database.userSignUp import add_user,find_user,validate_user
+from Database.userSignUp import add_user,find_user,validate_user,delete_user
 import threading
 # from NLP.oldwebScaper import extract_article_text
 from NLP.webScraper import extract_article_info
+
+from datetime import datetime, timedelta
+import random
+
+from sendEmail.sendVerificstionCode import send_advanced_email
+
+verification_codes = {}
+
 
 app = Flask(__name__)
 
@@ -59,6 +67,8 @@ def get_markers():
     print(markers)
     return jsonify(markers)
 
+
+pending_registrations = {}
 @app.route("/signup", methods=["POST"])
 def signup():
     email = request.json["email"]
@@ -68,31 +78,50 @@ def signup():
     print("------------------signup code is called------------------")
     print(email, password,name)
 
-    # add user to the data base
     if find_user(email) is not None :
         return jsonify({"error": "Email already exists"}), 409
         
-    success = add_user(name,email,password)
-    print("success: ", success)     
-    if success:
-        return jsonify({"message": "Success! You are now registered."})
+
+    verification_code = random.randint(100000, 999999) 
+    expiration_time = datetime.now() + timedelta(minutes=1)
+    pending_registrations[email] = {
+        "code": verification_code,
+        "expiration_time": expiration_time,
+        "name": name,
+        "password": password,
+    }
+
+    print("verification code: ", verification_code)
+
+    # send email to the user
+    send_advanced_email(email, verification_code)
+
+    return jsonify({"message": "Verification code sent."})
+
+
+@app.route("/verify", methods=["POST"])
+def verify():
+    email = request.json["email"]
+    user_code = request.json["verificationCode"]
+    cancel = request.json.get("cancel", False)  # Check for the cancel flag
+
+    if email in pending_registrations:
+        stored_code = pending_registrations[email]["code"]
+        expiration_time = pending_registrations[email]["expiration_time"]
+
+        if not cancel and datetime.now() < expiration_time and int(user_code.strip()) == stored_code:
+            user_data = pending_registrations[email]
+            add_user(user_data["name"], email, user_data["password"])
+            del pending_registrations[email]
+            print("Registration successful")
+            return jsonify({"success": True})
+        else:
+            del pending_registrations[email]
+            print("Registration failed")
+            return jsonify({"success": False})
     else:
-        return jsonify({"error": "Error in registering"}), 500
-
-    # verification_code = random.randint(100000, 999999)  # generate_random_code()  # Generate a verification code
-    # expiration_time = datetime.now() + timedelta(minutes=1)
-    # verification_codes[email] = {
-    #     "code": verification_code, "expiration_time": expiration_time}
-
-    # print("verification code: ", verification_code)
-
-    # if (want_send_email):
-    #     sendMail(email, verification_code)
-
-
-    # return jsonify({
-    #     "email": new_user["email"]
-    # })
+        print("Registration failed")
+        return jsonify({"success": False})
 
 @app.route("/login", methods=["POST"])
 def login_user():

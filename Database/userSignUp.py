@@ -6,7 +6,7 @@ import os
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
-load_dotenv('Database\.env')
+load_dotenv('./.env')
 
 username: str = os.getenv('DBUSERNAME')
 password: str = os.getenv('PASSWORD')
@@ -22,6 +22,9 @@ def add_user(name,email,password):
     except:
         return False
 
+def delete_user(email):
+    db.user.delete_one({"email": email})
+    return True # not needed yet
 
 def find_user(email):
     user = db.user.find_one({"email":email})

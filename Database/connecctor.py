@@ -3,10 +3,11 @@ from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
 import os
-load_dotenv('Database\.env')
+load_dotenv('./.env')
 
 username: str = os.getenv('DBUSERNAME')
 password: str = os.getenv('PASSWORD')
+
 
 client = MongoClient("mongodb+srv://"+username+":"+password +"@cluster0.lemvb4s.mongodb.net/")
 db = client.NewspaperAdAnalyzer
