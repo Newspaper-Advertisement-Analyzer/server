@@ -3,14 +3,8 @@ from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
 import os
-load_dotenv('Database\.env')
+from Database.db_connector import ad_collection
 
-username: str = os.getenv('DBUSERNAME')
-password: str = os.getenv('PASSWORD')
-
-client = MongoClient("localhost",27017)
-db = client.server_db
-ad_collection = db.ad_collection
 
 def add_advertisement(detail):
     ad_collection.insert_one(detail)

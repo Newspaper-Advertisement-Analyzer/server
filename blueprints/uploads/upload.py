@@ -1,0 +1,87 @@
+from flask import Blueprint, request, jsonify, make_response, current_app
+from Database.userSignUp import add_user,find_user,validate_user
+from NLP.webscraping import scrape_article_data
+from NLP.pdf_to_text import extract_text_from_image
+from NLP.detailextract import analyze_advertisement
+from Database.adCollection import add_advertisement
+
+import threading
+from NLP.webScraper import extract_article_info
+from flask import Flask,make_response,send_from_directory
+# from NLP.oldwebScaper import extract_article_text
+from NLP.webScraper import extract_article_info
+from werkzeug.utils import secure_filename
+import os
+
+upload_bp = Blueprint("upload", __name__)
+
+@upload_bp.route('/members', methods=['POST','GET'])
+def members():
+    inp = request.json.get("inp")
+    print(inp) # this is the URl
+    try:
+        # article_data = scrape_article_data(inp)
+        # print("link is ",article_data) this is wrong
+
+        
+        location, category, contact_info, prices = analyze_advertisement(inp)
+        ad_data = {
+            "position": "Default",
+            "name": "Default",
+            "location": location,
+            "category": category,
+            "phoneNumber": contact_info["phone_numbers"],
+            "email": contact_info["email_addresses"],
+            "price": prices
+        }
+        
+        # Create a new thread for the add_advertisement function
+        add_advertisement(ad_data)
+
+        # Create a JSON response with the required headers
+        return jsonify(ad_data)
+    except Exception as e:
+        return jsonify(error=str(e))
+
+@upload_bp.route('/process_image', methods=['POST'])
+def process_image():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image provided'})
+
+    image = request.files['image']
+    image_path = 'uploaded_image.png'
+    image.save(image_path)
+
+    extracted_text = extract_text_from_image(image_path)
+    return jsonify({'extracted_text': extracted_text})
+
+@upload_bp.route('/sendurl', methods=['POST'])
+def receive_url_from_frontend():
+    data = request.get_json()
+    url = data.get('url')
+
+    results = extract_article_info(url)
+
+    print(url)
+
+    return jsonify({'results': results})
+
+
+@upload_bp.route('/upload', methods=['POST'])
+def upload_image():
+    print("upload image is called")
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image part'})
+
+    image = request.files['image']
+
+    if image.filename == '':
+        # set a name for the image
+        image.filename = 'image.jpg'
+        return jsonify({'error': 'No name but saved as image.jpg'})
+        # return jsonify({'error': 'No selected image'})
+
+    filename = secure_filename(image.filename)
+    upload_folder = current_app.config['UPLOAD_FOLDER']  # Access the config from the current app
+    image.save(os.path.join(upload_folder, filename))
+    return jsonify({'message': 'Image uploaded successfully'})

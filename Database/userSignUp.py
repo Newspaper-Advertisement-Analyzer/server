@@ -6,7 +6,7 @@ import os
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
-load_dotenv('Database\.env')
+load_dotenv('..env')
 
 username: str = os.getenv('DBUSERNAME')
 password: str = os.getenv('PASSWORD')
