@@ -66,22 +66,30 @@ def receive_url_from_frontend():
 
     return jsonify({'results': results})
 
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload_image():
-    print("upload image is called")
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image part'})
+    print("upload_multiple_images is called")
+    
+    if 'images' not in request.files:
+        return jsonify({'error': 'No images part'})
 
-    image = request.files['image']
+    images = request.files.getlist('images')  # Use getlist to retrieve multiple files
 
-    if image.filename == '':
-        # set a name for the image
-        image.filename = 'image.jpg'
-        return jsonify({'error': 'No name but saved as image.jpg'})
-        # return jsonify({'error': 'No selected image'})
+    for image in images:
+        if image.filename == '':
+            # Skip empty files
+            continue
 
-    filename = secure_filename(image.filename)
-    upload_folder = current_app.config['UPLOAD_FOLDER']  # Access the config from the current app
-    image.save(os.path.join(upload_folder, filename))
+        if not allowed_file(image.filename):
+            return jsonify({'error': 'Invalid file type'})
+
+        filename = secure_filename(image.filename)
+        
+        upload_folder = current_app.config['UPLOAD_FOLDER']  # Access the config from the current app
+        image.save(os.path.join(upload_folder, filename))
     return jsonify({'message': 'Image uploaded successfully'})
+
