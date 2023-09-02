@@ -4,6 +4,7 @@ from NLP.webscraping import scrape_article_data
 from NLP.pdf_to_text import extract_text_from_image
 from NLP.detailextract import analyze_advertisement
 from NLP.detailextract import analyze_advertisement_img
+from NLP.pdf_to_text import pdftotext
 from Database.adCollection import add_advertisement
 
 import threading
@@ -90,10 +91,39 @@ def upload_image():
 
         filename = secure_filename(image.filename)
         
-        upload_folder = current_app.config['UPLOAD_FOLDER']  # Access the config from the current app
+        upload_folder = current_app.config['UPLOAD_FOLDER_IMG']  # Access the config from the current app
         image.save(os.path.join(upload_folder, filename))
         extracted_text = (extract_text_from_image(os.path.join(upload_folder, filename)))
         result.append(analyze_advertisement_img(extracted_text))
     return jsonify({'message': result})
     # return jsonify({'message': 'Image uploaded successfully'})
 
+
+ALLOWED_EXTENSIONS_PDF = {'pdf'}
+def allowed_pdf(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PDF
+
+@upload_bp.route('/uploadpdf', methods=['POST'])
+def upload_pdf():
+    print("upload_multiple_pdf is called")
+    
+    if 'pdfs' not in request.files:
+        return jsonify({'error': 'No pdfs part'})
+
+    pdfs = request.files.getlist('pdfs')  # Use getlist to retrieve multiple files
+    result = []
+    for pdf in pdfs:
+        if pdf.filename == '':
+            # Skip empty files
+            continue
+
+        if not allowed_pdf(pdf.filename):
+            return jsonify({'error': 'Invalid file type'})
+
+        filename = secure_filename(pdf.filename)
+        
+        upload_folder = current_app.config['UPLOAD_FOLDER_PDF']  # Access the config from the current app
+        pdf.save(os.path.join(upload_folder, filename))
+        extracted_text = (pdftotext(os.path.join(upload_folder, filename)))
+        result.append(analyze_advertisement_img(extracted_text))
+    return jsonify({'message': result})

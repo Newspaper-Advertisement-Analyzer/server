@@ -24,8 +24,9 @@ app.register_blueprint(signIn_bp)
 app.register_blueprint(upload_bp)
 
 
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
+app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
 
 
 if __name__ == '__main__':
