@@ -31,7 +31,7 @@ def categorize_advertisement(advertisement_text):
 
     # Check for common keywords to categorize the advertisement
     keywords_to_category = {
-        "landsales": ["land for sale", "landsales", "land plot", "property for sale", "land for"],
+        "landsales": ["land for sale", "landsales", "land plot", "property for sale", "land for", "land"],
         "marriage_proposals": ["marriage proposal", "bride", "groom", "marriage partner"],
         "vehicle_for_sale": ["vehicle for sale", "car for sale", "auto for sale", "motorcycle for sale"]
     }
@@ -81,6 +81,42 @@ def analyze_advertisement(advertisement_URL):
             prices = extract_price(new_text)
         else:
             prices = ["No price found"]
+
+    location = extract_locations(advertisement_text)
+
+    # contact_info["phone_numbers"] = extract_phone_num(advertisement_text)
+    # contact_info["email_addresses"] = extract_email_addresses(advertisement_text)
+
+    print("Location: ", location)
+    print("Category: ", category)
+    print("Contact info: ", contact_info)
+    print("Prices: ", prices)
+
+    # location = ["no location"]
+
+    return location, category, contact_info, prices
+
+def analyze_advertisement_img(advertisement_text):
+
+    category = categorize_advertisement(advertisement_text)
+    contact_info = []
+
+    # entities = NER(advertisement_text).ents
+    
+    # location = None
+    # for ent in entities:
+    #     if ent.label_ == 'GPE':  # GPE label indicates locations
+    #         location = ent.text.strip()
+
+    if extract_phone_num(advertisement_text) is not None:
+        contact_info = extract_phone_num(advertisement_text)
+    else:
+        contact_info= ["No phone number found"]
+
+    if extract_price(advertisement_text) is not None:
+        prices = extract_price(advertisement_text)
+    else:
+       prices = ["No price found"]
 
     location = extract_locations(advertisement_text)
 

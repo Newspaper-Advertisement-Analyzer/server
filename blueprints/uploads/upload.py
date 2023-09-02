@@ -3,6 +3,7 @@ from Database.userSignUp import add_user,find_user,validate_user
 from NLP.webscraping import scrape_article_data
 from NLP.pdf_to_text import extract_text_from_image
 from NLP.detailextract import analyze_advertisement
+from NLP.detailextract import analyze_advertisement_img
 from Database.adCollection import add_advertisement
 
 import threading
@@ -78,7 +79,7 @@ def upload_image():
         return jsonify({'error': 'No images part'})
 
     images = request.files.getlist('images')  # Use getlist to retrieve multiple files
-
+    result = []
     for image in images:
         if image.filename == '':
             # Skip empty files
@@ -91,5 +92,8 @@ def upload_image():
         
         upload_folder = current_app.config['UPLOAD_FOLDER']  # Access the config from the current app
         image.save(os.path.join(upload_folder, filename))
-    return jsonify({'message': 'Image uploaded successfully'})
+        extracted_text = (extract_text_from_image(os.path.join(upload_folder, filename)))
+        result.append(analyze_advertisement_img(extracted_text))
+    return jsonify({'message': result})
+    # return jsonify({'message': 'Image uploaded successfully'})
 
