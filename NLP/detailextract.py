@@ -32,6 +32,7 @@ def categorize_advertisement(advertisement_text):
     # Check for common keywords to categorize the advertisement
     keywords_to_category = {
         "landsales": ["land for sale", "landsales", "land plot", "property for sale", "land for", "land"],
+        "house sales": ["house", "apartment"],
         "marriage_proposals": ["marriage proposal", "bride", "groom", "marriage partner"],
         "vehicle_for_sale": ["vehicle for sale", "car for sale", "auto for sale", "motorcycle for sale"]
     }
