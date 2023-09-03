@@ -47,6 +47,11 @@ def getAveragePricebyWeek():
     ]
 
     result = list(db.LandSale_Advertisement.aggregate(pipeline))
-    print(result)
+    #print(result)
    
     return result
+
+
+def countLandsale():
+    count = db.LandSale_Advertisement.count_documents({})
+    return count
