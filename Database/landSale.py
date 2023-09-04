@@ -51,6 +51,79 @@ def getAveragePricebyWeek():
    
     return result
 
+def getAveragePricebyMonth():
+    # Calculate the date 12 months ago from today
+    end_date = datetime.datetime.now()
+    start_date = end_date - datetime.timedelta(days=365)
+
+    # Use $dateToString to group by month and year
+    pipeline = [
+        {
+            "$match": {
+                "Posted_Date": {"$gte": start_date, "$lte": end_date}
+            }
+        },
+        {
+            "$addFields": {
+                "month": {
+                    "$dateToString": {
+                        "format": "%Y-%m",  # Format to include year and month
+                        "date": "$Posted_Date"
+                    }
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": "$month",
+                "average_price": {"$avg": {"$toDouble": "$Price_per_Perch"}}
+            }
+        },
+        {
+            "$sort": {"_id": 1}  # Sort by month in ascending order
+        }
+    ]
+
+    result = list(db.LandSale_Advertisement.aggregate(pipeline))
+    return result
+
+def getAveragePricebyYear():
+    # Calculate the date 5 years ago from today
+    end_date = datetime.datetime.now()
+    start_date = end_date - datetime.timedelta(days=5*365)
+
+    # Use $dateToString to group by year
+    pipeline = [
+        {
+            "$match": {
+                "Posted_Date": {"$gte": start_date, "$lte": end_date}
+            }
+        },
+        {
+            "$addFields": {
+                "year": {
+                    "$dateToString": {
+                        "format": "%Y",  # Format to include year
+                        "date": "$Posted_Date"
+                    }
+                }
+            }
+        },
+        {
+            "$group": {
+                "_id": "$year",
+                "average_price": {"$avg": {"$toDouble": "$Price_per_Perch"}}
+            }
+        },
+        {
+            "$sort": {"_id": 1}  # Sort by year in ascending order
+        }
+    ]
+
+    result = list(db.LandSale_Advertisement.aggregate(pipeline))
+    return result
+
+
 
 def countLandsale():
     count = db.LandSale_Advertisement.count_documents({})
