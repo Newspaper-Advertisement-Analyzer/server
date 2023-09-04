@@ -37,3 +37,6 @@ def validate_user(email,password):
     if not bcrypt.check_password_hash(user["password"], password):
         return False
     return True
+
+
+    
