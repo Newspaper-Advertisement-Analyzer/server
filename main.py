@@ -1,7 +1,7 @@
 from flask import Flask
 
 #import blue prints
-from blueprints.advertisementMap.adverisementMap import advertisementsMap_bp
+from blueprints.advertisementMap.adverisementMap import recentAdLocation_bp
 from blueprints.authentication.signup import signUp_bp
 from blueprints.authentication.signin import signIn_bp
 from blueprints.uploads.upload import upload_bp
@@ -22,7 +22,7 @@ verification_codes = {}
 
 
 app = Flask(__name__)
-app.register_blueprint(advertisementsMap_bp)
+app.register_blueprint(recentAdLocation_bp)
 app.register_blueprint(signUp_bp)
 app.register_blueprint(signIn_bp)
 app.register_blueprint(upload_bp)

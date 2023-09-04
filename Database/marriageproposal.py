@@ -50,13 +50,32 @@ def getRecentMarriageProposals(limit=15):
         "Location.City": 1,
         "Posted_Date": 1,
         "Title": 1,
-        "Price_per_Perch": 1,
-        "Number_of_Rooms": 1,
         "Gender": 1,
         "Age": 1,
         "Profession": 1,
         "Nationality": 1,
         "Source": 1
+    }
+
+    # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
+    recent_advertisements = db.Marriage_Proposal.find({}, projection).sort("Posted_Date", -1).limit(limit)
+
+    # Convert the cursor to a list of dictionaries
+    advertisements_list = list(recent_advertisements)
+
+    return advertisements_list
+
+
+def getRecentMarriagePropLocation(limit=15):
+    # Define the fields to be extracted
+    projection = {
+        "_id": 0,  # Exclude the MongoDB document ID
+        "Contact_Info": 1,
+        "Location": 1,
+        "Title": 1,
+        "Gender": 1,
+        "Age": 1,
+        "Profession": 1,
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first

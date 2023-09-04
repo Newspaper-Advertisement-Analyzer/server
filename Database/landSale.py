@@ -151,3 +151,23 @@ def getRecentLandSaleAdvertisements(limit=15):
 
     return advertisements_list
 
+def getRecentLandSaleAdLocation(limit=15):
+    # Define the fields to be extracted
+    projection = {
+        "_id": 0,  # Exclude the MongoDB document ID
+        "Contact_Info": 1,
+        "Location": 1,
+        "Title": 1,
+        "Price_per_Perch": 1,
+        "Number_of_Perch": 1,
+    }
+
+    # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
+    recent_advertisements = db.LandSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+
+    # Convert the cursor to a list of dictionaries
+    advertisements_list = list(recent_advertisements)
+
+    return advertisements_list
+
+
