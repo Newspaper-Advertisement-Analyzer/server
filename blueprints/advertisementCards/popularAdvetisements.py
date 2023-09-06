@@ -15,7 +15,7 @@ def getPopularAds():
     categorized_ads = []
     for ad_data, category in [(land_sale_ad, "Land Sale"), (house_sale_ad, "House Sale"), (marriage_proposal_ad, "Marriage Proposal")]:
         for ad in ad_data:
-            categorized_ads.append({"category": category, "Title": ad["Title"], "Description": ad["Description"]})
+            categorized_ads.append({"Advertisement_ID": ad["Advertisement_ID"], "category": category, "Title": ad["Title"], "Description": ad["Description"]})
     print(categorized_ads)
     return jsonify(categorized_ads)
  
