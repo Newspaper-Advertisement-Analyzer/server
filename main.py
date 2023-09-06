@@ -11,7 +11,7 @@ from blueprints.graphViewer.marriagePoposalCatergory import categorizebyAge_bp
 from blueprints.graphViewer.houseSalebyCity import houseSalebyCity_bp
 from blueprints.searchTable.recentAdvertisement import recentAd_bp
 from blueprints.advertisementCards.popularAdvetisements import popularAd_bp
-
+from blueprints.searchBar.searchByFilters import searchByFilters_bp
 
 from datetime import datetime, timedelta
 import random
@@ -32,6 +32,7 @@ app.register_blueprint(categorizebyAge_bp)
 app.register_blueprint(houseSalebyCity_bp)
 app.register_blueprint(recentAd_bp)
 app.register_blueprint(popularAd_bp)
+app.register_blueprint(searchByFilters_bp)
 
 app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
 app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
