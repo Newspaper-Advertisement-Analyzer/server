@@ -93,3 +93,18 @@ def get_ads_by_category(category, start_date, end_date):
     return results
 
 
+def searchADbyID(adID, AdvertisementCollection):
+    print(adID)
+    try:
+        # Find the advertisement document by its Advertisement_ID
+        advertisement = db[AdvertisementCollection].find_one(
+            {"Advertisement_ID": adID},
+            {"_id": 0}  # Exclude the "_id" field
+        )
+        if advertisement:
+            return advertisement
+        else:
+            return None
+    except Exception as e:
+        print("Error searching advertisement by ID:", str(e))
+        return None
