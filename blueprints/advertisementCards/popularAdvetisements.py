@@ -29,7 +29,7 @@ def searchAdDetails():
     elif adverisementID[2] == "2":
         data = searchADbyID(adverisementID, "LandSale_Advertisement")
     elif adverisementID[2] == "3":
-        data = searchADbyID(adverisementID, "Marriage_Proposals")
+        data = searchADbyID(adverisementID, "Marriage_Proposal")
     return jsonify(data)
     
  
