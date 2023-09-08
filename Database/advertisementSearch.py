@@ -85,14 +85,18 @@ def search_ads_by_location(location):
     results = []
     # List of advertisement collections
     collections = ["LandSale_Advertisement", "HouseSale_Advertisement", "Marriage_Proposal"]
+    regex_pattern = f".*{location}.*"
 
     # Iterate through each collection and perform the search
     for collection_name in collections:
         # Define the aggregation pipeline for the current collection
         pipeline = [
             {
-                "$match": {
-                    "Location.City": location
+                 "$match": {
+                    "Location.City": {
+                        "$regex": regex_pattern,
+                        "$options": "i"  # Case-insensitive
+                    }
                 }
             },
             {
@@ -117,14 +121,17 @@ def search_ads_by_title(title):
     results = []
     # List of advertisement collections
     collections = ["LandSale_Advertisement", "HouseSale_Advertisement", "Marriage_Proposal"]
-
+    regex_pattern = f".*{title}.*"
     # Iterate through each collection and perform the search
     for collection_name in collections:
         # Define the aggregation pipeline for the current collection
         pipeline = [
             {
-                "$match": {
-                    "Title": title
+                 "$match": {
+                    "Title": {
+                        "$regex": regex_pattern,
+                        "$options": "i"  # Case-insensitive
+                    }
                 }
             },
             {
