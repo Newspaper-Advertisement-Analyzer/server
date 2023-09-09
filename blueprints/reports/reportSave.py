@@ -12,9 +12,10 @@ def pdfReportSave():
         
         # Retrieve the userID from the form data
         userID = request.form['userID']
+        title = request.form['title']
         
         # Call the saveReport function with the PDF report data and userID
-        saveReport(pdf_report, userID)
+        saveReport(pdf_report, userID, title)
         
         return jsonify({"message": "PDF report saved successfully"}), 200
     except Exception as e:

@@ -17,11 +17,12 @@ password: str = os.getenv('PASSWORD')
 client = MongoClient("mongodb+srv://"+username+":"+password+"@cluster0.lemvb4s.mongodb.net/")
 db = client.Advizor
 
-def saveReport(pdf_report, user_ID):
+def saveReport(pdf_report, user_ID, title):
     try:
         # Create a new document in the 'reports' collection to store the PDF report
         report_data = {
             "UserID": user_ID,
+            "Title": title,
             "report": pdf_report,
             "timestamp": datetime.datetime.now()
         }
