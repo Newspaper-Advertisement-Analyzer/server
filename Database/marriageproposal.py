@@ -41,6 +41,50 @@ def categorizeMarriageProposalsByAge():
     print(result)
     return result
 
+
+def categorizeMarriageProposalsByProfession():
+    pipeline = [
+        {
+            "$match": {
+                "Profession": {"$exists": True},  # Assuming profession information is stored in the 'Profession' field
+            }
+        },
+        {
+            "$group": {
+                "_id": "$Profession",  # Group by the 'Profession' field
+                "count": {"$sum": 1}  # Count the occurrences of each profession type
+            }
+        },
+        {
+            "$sort": {"count": -1}  # Sort the results by count in descending order
+        }
+    ]
+
+    result = list(db.Marriage_Proposal.aggregate(pipeline))
+    return result
+
+
+def categorizeMarriageProposalsByCity():
+    pipeline = [
+        {
+            "$match": {
+                "Location.City": {"$exists": True},  # Assuming profession information is stored in the 'Profession' field
+            }
+        },
+        {
+            "$group": {
+                "_id": "$Location.City",  # Group by the 'Profession' field
+                "count": {"$sum": 1}  # Count the occurrences of each profession type
+            }
+        },
+        {
+            "$sort": {"count": -1}  # Sort the results by count in descending order
+        }
+    ]
+
+    result = list(db.Marriage_Proposal.aggregate(pipeline))
+    return result
+
 def getRecentMarriageProposals(limit=15):
     # Define the fields to be extracted
     projection = {
