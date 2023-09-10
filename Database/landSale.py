@@ -4,15 +4,7 @@ from bson.json_util import dumps
 from dotenv import load_dotenv
 import datetime
 import os
-
-
-load_dotenv('./.env')
-
-username: str = os.getenv('DBUSERNAME')
-password: str = os.getenv('PASSWORD')
-
-client = MongoClient("mongodb+srv://"+username+":"+password +"@cluster0.lemvb4s.mongodb.net/")
-db = client.Advizor
+from Database.db_connector import db
 
 def getAverageLandPriceByTimePeriod(time_period, district):
     # Define time_period_to_timedelta mapping

@@ -5,7 +5,7 @@ from NLP.pdf_to_text import extract_text_from_image
 from NLP.detailextract import analyze_advertisement
 from NLP.detailextract import analyze_advertisement_img
 from NLP.pdf_to_text import pdftotext
-from Database.adCollection import add_advertisement
+
 
 import threading
 from NLP.webScraper import extract_article_info
