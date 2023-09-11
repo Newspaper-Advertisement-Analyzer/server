@@ -4,23 +4,23 @@ from Database.report import saveReport,getReportById
 
 reports_bp = Blueprint("reports", __name__)
 
-@reports_bp.route('/upload-pdf', methods=['POST'])
+@reports_bp.route('/upload-pdf-url', methods=['POST'])
 def pdfReportSave():
     try:
-        # Retrieve the PDF report from the request files
-        pdf_report = request.files['pdf'].read()
+        # Retrieve the PDF URL from the form data
+        pdf_url = request.form['pdfURL']
         
-        # Retrieve the userID from the form data
+        # Retrieve the userID and title from the form data
         userID = request.form['userID']
         title = request.form['title']
         
-        # Call the saveReport function with the PDF report data and userID
-        saveReport(pdf_report, userID, title)
+        # Call the saveReport function with the PDF URL, userID, and title
+        saveReport(pdf_url, userID, title)
         
-        return jsonify({"message": "PDF report saved successfully"}), 200
+        return jsonify({"message": "PDF URL saved successfully"}), 200
     except Exception as e:
         print(str(e))
-        return jsonify({"error": "Error saving PDF report"}), 500
+        return jsonify({"error": "Error saving PDF URL"}), 500
 
 
 
