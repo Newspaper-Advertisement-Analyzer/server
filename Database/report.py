@@ -41,7 +41,7 @@ def getReportById(report_id):
 def getReports():
     try:
         # Retrieve all the reports from the 'reports' collection
-        reports = list(db.Report.find({},{"report": 0}))
+        reports = list(db.Report.find({},{"_id": 0}))
         return reports
     except Exception as e:
         # Handle any errors that occur during retrieval
