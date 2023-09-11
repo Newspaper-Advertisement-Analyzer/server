@@ -170,7 +170,7 @@ def getRecentLandSaleAdLocation(limit=15):
 
     return advertisements_list
 
-def getLatestLandSaleAd(limit=1):
+def getLatestLandSaleAd(limit=3):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID

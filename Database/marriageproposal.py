@@ -86,7 +86,7 @@ def getRecentMarriagePropLocation(limit=15):
 
     return advertisements_list
 
-def getLatestMarriageProposalSaleAd(limit=1):
+def getLatestMarriageProposalSaleAd(limit=2):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID
