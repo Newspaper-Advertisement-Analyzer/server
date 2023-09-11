@@ -4,16 +4,7 @@ from dotenv import load_dotenv
 import datetime
 from datetime import datetime
 import os
-
-load_dotenv('./.env')
-
-username = os.getenv('DBUSERNAME')
-password = os.getenv('PASSWORD')
-
-client = MongoClient(f"mongodb+srv://{username}:{password}@cluster0.lemvb4s.mongodb.net/")
-db = client.Advizor
-
-
+from Database.db_connector import db
 
 def search_ads_by_date(start_date, end_date):
     # Convert start_date and end_date to datetime objects
