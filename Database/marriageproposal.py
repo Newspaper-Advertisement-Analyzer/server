@@ -2,7 +2,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
-import datetime
 from datetime import datetime, timedelta
 import os
 from Database.db_connector import db

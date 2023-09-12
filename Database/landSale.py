@@ -2,22 +2,21 @@ from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
-import datetime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta  # Import datetime and timedelta from datetime module
 import os
 from Database.db_connector import db
 
 def getAverageLandPriceByTimePeriod(time_period, district):
     # Define time_period_to_timedelta mapping
     time_period_to_timedelta = {
-        "Weekly": datetime.timedelta(weeks=5),
-        "Monthly": datetime.timedelta(days=365 / 12),  # Approximately 30.44 days per month
-        "Yearly": datetime.timedelta(days=365),
+        "Weekly": timedelta(weeks=5),
+        "Monthly": timedelta(days=365 / 12),  # Approximately 30.44 days per month
+        "Yearly": timedelta(days=365),
     }
 
     # Calculate the date based on the specified time_period
-    end_date = datetime.datetime.now()
-    start_date = end_date - time_period_to_timedelta.get(time_period, datetime.timedelta(days=365))
+    end_date = datetime.now()
+    start_date = end_date - time_period_to_timedelta.get(time_period, timedelta(days=365))
 
     # Define the date format for grouping
     date_format = {
@@ -63,6 +62,7 @@ def getAverageLandPriceByTimePeriod(time_period, district):
 
     result = list(db.LandSale_Advertisement.aggregate(pipeline))
     return result
+
 
 
 
