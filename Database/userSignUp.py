@@ -26,7 +26,8 @@ def add_user(name, email, password):
             "Contact_Number": None,
             "User_Name": name,
             "Registration_Date": datetime.now(),
-            "Profession": None
+            "Profession": None,
+            "Role": "user"
         })
         return True
     except Exception as e:

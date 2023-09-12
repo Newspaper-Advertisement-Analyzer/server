@@ -56,7 +56,8 @@ def login_user():
             "Contact_Number": user["Contact_Number"],
             "User_Name": user["User_Name"],
             "Registration_Date": user["Registration_Date"],
-            "Profession": user["Profession"]
+            "Profession": user["Profession"],
+            "Role": user["Role"]
         }
         return jsonify({"message": "Success! You are now logged in.", "user": user_data})
     else:
