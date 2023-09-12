@@ -3,6 +3,7 @@ from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
 import datetime
+from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
 
@@ -92,7 +93,9 @@ def getRecentLandSaleAdvertisements(limit=15):
 
     return advertisements_list
 
-def getRecentLandSaleAdLocation(limit=15):
+from datetime import datetime, timedelta
+
+def getRecentLandSaleAdLocation(duration, limit=15):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID
@@ -103,13 +106,42 @@ def getRecentLandSaleAdLocation(limit=15):
         "Number_of_Perch": 1,
     }
 
+    # Calculate the start date based on the selected duration
+    if duration == "Overall":
+        # No date filter needed, retrieve all records
+        start_date = None
+    elif duration == "Today":
+        # Retrieve records from today onwards
+        start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    elif duration == "Yesterday":
+        # Retrieve records from yesterday
+        start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+    elif duration == "LastWeek":
+        # Retrieve records from the start of the previous week
+        today = datetime.now()
+        start_date = today - timedelta(days=today.weekday() + 7)
+    elif duration == "LastMonth":
+        # Retrieve records from the start of the previous month
+        today = datetime.now()
+        start_date = today.replace(day=1) - timedelta(days=1)
+
+    # Create a filter based on the start date
+    if start_date:
+        date_filter = {"Posted_Date": {"$gte": start_date}}
+    else:
+        date_filter = {}
+
+    # Add the date filter to the query
+    query = {"$and": [date_filter]}
+
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.LandSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.LandSale_Advertisement.find(query, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
 
     return advertisements_list
+
 
 def getLatestLandSaleAd(limit=3):
     # Define the fields to be extracted

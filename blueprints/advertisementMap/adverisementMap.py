@@ -5,17 +5,15 @@ from Database.marriageproposal import getRecentMarriagePropLocation
 
 recentAdLocation_bp = Blueprint("recentAdLocation", __name__)
 
-@recentAdLocation_bp.route('/getRecentAdLocationLandSale', methods=['GET'])
+@recentAdLocation_bp.route('/getRecentAdLocation', methods=['GET'])
 def recentAdvertisementLandSale():
-    data = getRecentLandSaleAdLocation()
+    adType = request.args.get('adtype')
+    duration = request.args.get('duration')
+    if adType == "LandSale":
+        data = getRecentLandSaleAdLocation(duration)
+    elif adType == "HouseSale":
+        data = getRecentHouseSaleAdLocation(duration)
+    elif adType == "MarriageProp":
+        data = getRecentMarriagePropLocation(duration)
     return jsonify(data)
 
-@recentAdLocation_bp.route('/getRecentAdLocationHouseSale', methods=['GET'])
-def recentAdvertisementHouseSale():
-    data = getRecentHouseSaleAdLocation()
-    return jsonify(data)
-
-@recentAdLocation_bp.route('/getRecentAdLocationMarriageProp', methods=['GET'])
-def recentAdvertisementMarriageProp():
-    data = getRecentMarriagePropLocation()
-    return data
