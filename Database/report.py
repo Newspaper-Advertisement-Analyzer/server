@@ -46,3 +46,7 @@ def getReports():
     except Exception as e:
         # Handle any errors that occur during retrieval
         return None
+
+def countReports():
+    count = db.Report.count_documents({})
+    return count

@@ -14,6 +14,7 @@ from blueprints.advertisementCards.popularAdvetisements import popularAd_bp
 from blueprints.searchBar.searchByFilters import searchByFilters_bp
 from blueprints.reports.reportSave import reports_bp
 from blueprints.reports.getReports import getreports_bp
+from blueprints.counts.counts import counts_bp
 
 from datetime import datetime, timedelta
 import random
@@ -37,6 +38,7 @@ app.register_blueprint(popularAd_bp)
 app.register_blueprint(searchByFilters_bp)
 app.register_blueprint(reports_bp)
 app.register_blueprint(getreports_bp)
+app.register_blueprint(counts_bp)
 
 app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
 app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
