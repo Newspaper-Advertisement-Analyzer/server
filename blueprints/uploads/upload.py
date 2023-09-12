@@ -118,7 +118,8 @@ def allowed_pdf(filename):
 
 @upload_bp.route('/uploadpdf', methods=['POST'])
 def upload_pdf():
-    print("upload_multiple_pdf is called")
+    isImageContained = request.args.get('isImageContained')
+    print(isImageContained)
 
     if 'pdfs' not in request.files:
         return jsonify({'error': 'No pdfs part'})
