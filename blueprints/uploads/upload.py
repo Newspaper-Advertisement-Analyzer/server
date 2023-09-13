@@ -140,8 +140,12 @@ def upload_pdf():
         # Access the config from the current app
         upload_folder = current_app.config['UPLOAD_FOLDER_PDF']
         pdf.save(os.path.join(upload_folder, filename))
-        # extracted_text = (pdftotext(os.path.join(upload_folder, filename)))
-        extracted_text = (pdftotext_ocr(os.path.join(upload_folder, filename)))
+
+        if (isImageContained=="true"):
+            extracted_text = (pdftotext_ocr(os.path.join(upload_folder, filename)))
+        else:
+            extracted_text = (pdftotext(os.path.join(upload_folder, filename)))
+            
         print(extracted_text)
         result.append(analyze_advertisement_img(extracted_text))
     return jsonify({'message': result})
