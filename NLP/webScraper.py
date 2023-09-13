@@ -39,6 +39,8 @@ def extract_article_info(url):
     catogory = identify_catogory(text)
     price = identify_price(text)
     contact = extract_contacts(text)
+    if locations == None:
+        locations = extract_locations(title)
 
 
     return title, text, summary, keywords, catogory, price, contact, locations
