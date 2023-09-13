@@ -22,6 +22,7 @@ def add_user(name, email, password):
         db.User.insert_one({
             "Full_Name": name,
             "email": email,
+            "User_ID": "pu1011",
             "password": hashed_password,
             "Contact_Number": None,
             "User_Name": name,
