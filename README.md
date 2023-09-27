@@ -1,7 +1,7 @@
 # Newspaper Advertisement Analyzer (Server)
 ![version](https://img.shields.io/badge/version-1.0-blue.svg) 
 
-![Newspaper Advertisement Analyzer Logo or Screenshot (if available)](newspaper-ad-analyzer-screenshot.png)
+![Newspaper Advertisement Analyzer Logo or Screenshot (if available)](image.jpg)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -27,7 +27,6 @@ Welcome to the Newspaper Advertisement Analyzer (Server) repository! This server
 
 4. **Frontend Communication:** Serves as the backend for the frontend application, facilitating the exchange of data and results.
 
-5. **[Other Features]:** Mention any additional features or functionalities specific to your server component.
 
 ## Technologies Used
 
@@ -49,7 +48,7 @@ The Newspaper Advertisement Analyzer (Server) relies on a modern technology stac
 
 - **pymongo:** The MongoDB driver for Python to interact with the database.
 
-- **[Other Technologies]:** List any other technologies or libraries used in your project.
+
 
 ## Environment Setup
 
