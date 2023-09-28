@@ -84,9 +84,8 @@ Configure your application's database settings in the environment variables. Mak
   ```
 
 ## Contributors
-
-- [Chanuka Lakshan Chandra Yapa](https://github.com/Chanuka-ChandraYapa) - Frontend Developer
 - [Nadun Sanjeevana](https://github.com/NadunSanjeevana) - Backend Developer
+- [Chanuka Lakshan Chandra Yapa](https://github.com/Chanuka-ChandraYapa) - Frontend Developer
 - [Tharindu Madhusanka](link-to-contributor2-profile) - NLP Developer
 
 
