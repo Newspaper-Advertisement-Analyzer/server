@@ -1,6 +1,6 @@
 from flask import Flask
 
-#import blue prints
+# import blue prints
 from blueprints.advertisementMap.adverisementMap import recentAdLocation_bp
 from blueprints.authentication.signup import signUp_bp
 from blueprints.authentication.signin import signIn_bp
@@ -15,6 +15,8 @@ from blueprints.searchBar.searchByFilters import searchByFilters_bp
 from blueprints.reports.reportSave import reports_bp
 from blueprints.reports.getReports import getreports_bp
 from blueprints.counts.counts import counts_bp
+from blueprints.manageUser.viewUsers import getAllUsers_bp
+from blueprints.manageUser.deleteUser import deleteUser_bp
 
 from datetime import datetime, timedelta
 import random
@@ -39,6 +41,8 @@ app.register_blueprint(searchByFilters_bp)
 app.register_blueprint(reports_bp)
 app.register_blueprint(getreports_bp)
 app.register_blueprint(counts_bp)
+app.register_blueprint(getAllUsers_bp)
+app.register_blueprint(deleteUser_bp)
 
 app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
 app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
