@@ -6,7 +6,8 @@ from main import create_app
 @pytest.fixture(scope="module")
 def test_db():
     # Connect to a test database (you may need to use a different database name)
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient(
+        "mongodb+srv://nadun:nadun2001@cluster0.lemvb4s.mongodb.net/")
     test_db = client.TestNewspaperAdAnalyzer
 
     yield test_db

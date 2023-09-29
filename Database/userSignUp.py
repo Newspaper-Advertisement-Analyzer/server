@@ -16,6 +16,7 @@ bcrypt = Bcrypt()
 # client = MongoClient("mongodb+srv://"+username+":"+password +"@cluster0.lemvb4s.mongodb.net/")
 # db = client.NewspaperAdAnalyzer
 
+
 def add_user(name, email, password):
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     try:
@@ -35,6 +36,7 @@ def add_user(name, email, password):
         print(e)
         return False
 
+
 def delete_user(email):
     try:
         db.User.delete_one({"email": email})
@@ -43,9 +45,11 @@ def delete_user(email):
         print(e)
         return False
 
+
 def find_user(email):
     user = db.User.find_one({"email": email})
     return user
+
 
 def validate_user(email, password):
     user = db.User.find_one({"email": email})
@@ -54,6 +58,7 @@ def validate_user(email, password):
     if not bcrypt.check_password_hash(user["password"], password):
         return False
     return True
+
 
 def countUers():
     count = db.User.count_documents({})
