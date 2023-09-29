@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from main import create_app
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(autouse=True)
 def test_db():
     # Connect to a test database (you may need to use a different database name)
     client = MongoClient(
@@ -20,6 +20,10 @@ def test_db():
 def client():
     # Use the test database for the Flask app
     app = create_app(config={"TESTING": True})
+
+    # Set the FLASK_ENV environment variable to "testing"
+    app.config["ENV"] = "testing"
+
     client = app.test_client()
 
     yield client
