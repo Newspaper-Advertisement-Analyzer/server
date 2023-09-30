@@ -10,6 +10,7 @@ import datetime
 import os
 from Database.db_connector import db
 
+
 def saveReport(pdf_url, user_ID, title):
     try:
         # Create a new document in the 'reports' collection to store the PDF URL
@@ -19,14 +20,16 @@ def saveReport(pdf_url, user_ID, title):
             "PDF_URL": pdf_url,  # Save the PDF URL
             "timestamp": datetime.datetime.now()
         }
-        
+
         # Assuming you have a 'reports' collection in your database
-        db.Report.insert_one(report_data)  # Update the collection name as needed
-        
+        # Update the collection name as needed
+        db.Report.insert_one(report_data)
+
         return jsonify({"message": "Report saved successfully"}), 200
     except Exception as e:
         # Handle any errors that occur during the save operation
         return jsonify({"error": str(e)}), 500
+
 
 def getReportById(report_id):
     try:
@@ -41,11 +44,12 @@ def getReportById(report_id):
 def getReports():
     try:
         # Retrieve all the reports from the 'reports' collection
-        reports = list(db.Report.find({},{"_id": 0}))
+        reports = list(db.Report.find({}, {"_id": 0}))
         return reports
     except Exception as e:
         # Handle any errors that occur during retrieval
         return None
+
 
 def countReports():
     count = db.Report.count_documents({})
