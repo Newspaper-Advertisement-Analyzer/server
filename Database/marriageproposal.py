@@ -6,21 +6,25 @@ from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
 
+
 def countMarriageProposals():
     count = db.HouseSale_Advertisement.count_documents({})
     return count
+
 
 def categorizeMarriageProposalsByAge():
     pipeline = [
         {
             "$match": {
-                "Age": {"$exists": True},  # Assuming age information is stored in the 'age' field
+                # Assuming age information is stored in the 'age' field
+                "Age": {"$exists": True},
             }
         },
         {
             "$bucket": {
                 "groupBy": "$Age",
-                "boundaries": [18, 25, 30, 35, 40],  # Define your age categories as needed
+                # Define your age categories as needed
+                "boundaries": [18, 25, 30, 35, 40],
                 "default": "Other",  # If age doesn't fall into any category, categorize as 'Other'
                 "output": {
                     "count": {"$sum": 1}
@@ -38,17 +42,20 @@ def categorizeMarriageProposalsByProfession():
     pipeline = [
         {
             "$match": {
-                "Profession": {"$exists": True},  # Assuming profession information is stored in the 'Profession' field
+                # Assuming profession information is stored in the 'Profession' field
+                "Profession": {"$exists": True},
             }
         },
         {
             "$group": {
                 "_id": "$Profession",  # Group by the 'Profession' field
-                "count": {"$sum": 1}  # Count the occurrences of each profession type
+                # Count the occurrences of each profession type
+                "count": {"$sum": 1}
             }
         },
         {
-            "$sort": {"count": -1}  # Sort the results by count in descending order
+            # Sort the results by count in descending order
+            "$sort": {"count": -1}
         }
     ]
 
@@ -60,22 +67,26 @@ def categorizeMarriageProposalsByCity():
     pipeline = [
         {
             "$match": {
-                "Location.City": {"$exists": True},  # Assuming profession information is stored in the 'Profession' field
+                # Assuming profession information is stored in the 'Profession' field
+                "Location.City": {"$exists": True},
             }
         },
         {
             "$group": {
                 "_id": "$Location.City",  # Group by the 'Profession' field
-                "count": {"$sum": 1}  # Count the occurrences of each profession type
+                # Count the occurrences of each profession type
+                "count": {"$sum": 1}
             }
         },
         {
-            "$sort": {"count": -1}  # Sort the results by count in descending order
+            # Sort the results by count in descending order
+            "$sort": {"count": -1}
         }
     ]
 
     result = list(db.Marriage_Proposal.aggregate(pipeline))
     return result
+
 
 def getRecentMarriageProposals(limit=15):
     # Define the fields to be extracted
@@ -94,7 +105,8 @@ def getRecentMarriageProposals(limit=15):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.Marriage_Proposal.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.Marriage_Proposal.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
@@ -123,7 +135,8 @@ def getRecentMarriagePropLocation(duration, limit=15):
         start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     elif duration == "Yesterday":
         # Retrieve records from yesterday
-        start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+        start_date = datetime.now().replace(hour=0, minute=0, second=0,
+                                            microsecond=0) - timedelta(days=1)
     elif duration == "LastWeek":
         # Retrieve records from the start of the previous week
         today = datetime.now()
@@ -143,18 +156,20 @@ def getRecentMarriagePropLocation(duration, limit=15):
     query = {"$and": [date_filter]}
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.Marriage_Proposal.find(query, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.Marriage_Proposal.find(
+        query, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
 
     return advertisements_list
 
+
 def getLatestMarriageProposalSaleAd(limit=2):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID
-         "Advertisement_ID": 1,
+        "Advertisement_ID": 1,
         "Title": 1,
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
@@ -162,7 +177,8 @@ def getLatestMarriageProposalSaleAd(limit=2):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.Marriage_Proposal.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.Marriage_Proposal.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements = recent_advertisements
