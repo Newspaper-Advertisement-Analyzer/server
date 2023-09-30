@@ -26,27 +26,37 @@ from sendEmail.sendVerificstionCode import send_advanced_email
 verification_codes = {}
 
 
-app = Flask(__name__)
-app.register_blueprint(recentAdLocation_bp)
-app.register_blueprint(signUp_bp)
-app.register_blueprint(signIn_bp)
-app.register_blueprint(upload_bp)
-app.register_blueprint(averageSale_bp)
-app.register_blueprint(adDistribution_bp)
-app.register_blueprint(categorizebyAge_bp)
-app.register_blueprint(houseSalebyCity_bp)
-app.register_blueprint(recentAd_bp)
-app.register_blueprint(popularAd_bp)
-app.register_blueprint(searchByFilters_bp)
-app.register_blueprint(reports_bp)
-app.register_blueprint(getreports_bp)
-app.register_blueprint(counts_bp)
-app.register_blueprint(getAllUsers_bp)
-app.register_blueprint(deleteUser_bp)
+def create_app(config=None):
+    app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
-app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
+    # Register blueprints
+    app.register_blueprint(recentAdLocation_bp)
+    app.register_blueprint(signUp_bp)
+    app.register_blueprint(signIn_bp)
+    app.register_blueprint(upload_bp)
+    app.register_blueprint(averageSale_bp)
+    app.register_blueprint(adDistribution_bp)
+    app.register_blueprint(categorizebyAge_bp)
+    app.register_blueprint(houseSalebyCity_bp)
+    app.register_blueprint(recentAd_bp)
+    app.register_blueprint(popularAd_bp)
+    app.register_blueprint(searchByFilters_bp)
+    app.register_blueprint(reports_bp)
+    app.register_blueprint(getreports_bp)
+    app.register_blueprint(counts_bp)
+    app.register_blueprint(getAllUsers_bp)
+    app.register_blueprint(deleteUser_bp)
+
+    app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
+    app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
+
+    # Configure the app using the provided config
+    if config is not None:
+        app.config.update(config)
+
+    return app
 
 
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)

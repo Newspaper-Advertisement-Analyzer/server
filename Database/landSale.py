@@ -1,22 +1,27 @@
+from datetime import datetime, timedelta
 from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
 from dotenv import load_dotenv
-from datetime import datetime, timedelta  # Import datetime and timedelta from datetime module
+# Import datetime and timedelta from datetime module
+from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
+
 
 def getAverageLandPriceByTimePeriod(time_period, district):
     # Define time_period_to_timedelta mapping
     time_period_to_timedelta = {
         "Weekly": timedelta(weeks=5),
-        "Monthly": timedelta(days=365 / 12),  # Approximately 30.44 days per month
+        # Approximately 30.44 days per month
+        "Monthly": timedelta(days=365 / 12),
         "Yearly": timedelta(days=365),
     }
 
     # Calculate the date based on the specified time_period
     end_date = datetime.now()
-    start_date = end_date - time_period_to_timedelta.get(time_period, timedelta(days=365))
+    start_date = end_date - \
+        time_period_to_timedelta.get(time_period, timedelta(days=365))
 
     # Define the date format for grouping
     date_format = {
@@ -47,7 +52,8 @@ def getAverageLandPriceByTimePeriod(time_period, district):
             }
         },
         {
-            "$sort": {"_id": 1}  # Sort by the specified time period in ascending order
+            # Sort by the specified time period in ascending order
+            "$sort": {"_id": 1}
         }
     ]
 
@@ -64,12 +70,10 @@ def getAverageLandPriceByTimePeriod(time_period, district):
     return result
 
 
-
-
-
 def countLandsale():
     count = db.LandSale_Advertisement.count_documents({})
     return count
+
 
 def getRecentLandSaleAdvertisements(limit=15):
     # Define the fields to be extracted
@@ -86,14 +90,14 @@ def getRecentLandSaleAdvertisements(limit=15):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.LandSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.LandSale_Advertisement.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
 
     return advertisements_list
 
-from datetime import datetime, timedelta
 
 def getRecentLandSaleAdLocation(duration, limit=15):
     # Define the fields to be extracted
@@ -115,7 +119,8 @@ def getRecentLandSaleAdLocation(duration, limit=15):
         start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     elif duration == "Yesterday":
         # Retrieve records from yesterday
-        start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+        start_date = datetime.now().replace(hour=0, minute=0, second=0,
+                                            microsecond=0) - timedelta(days=1)
     elif duration == "LastWeek":
         # Retrieve records from the start of the previous week
         today = datetime.now()
@@ -135,7 +140,8 @@ def getRecentLandSaleAdLocation(duration, limit=15):
     query = {"$and": [date_filter]}
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.LandSale_Advertisement.find(query, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.LandSale_Advertisement.find(
+        query, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
@@ -147,7 +153,7 @@ def getLatestLandSaleAd(limit=3):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID
-         "Advertisement_ID": 1,
+        "Advertisement_ID": 1,
         "Title": 1,
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
@@ -155,15 +161,10 @@ def getLatestLandSaleAd(limit=3):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.LandSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.LandSale_Advertisement.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements = recent_advertisements
 
     return advertisements
-
-
-
-
-
-
