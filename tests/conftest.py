@@ -16,14 +16,19 @@ def test_db():
     test_db.User.delete_many({})
 
 
-@pytest.fixture
-def client():
+@pytest.fixture(autouse=True)
+def app(test_db):
     # Use the test database for the Flask app
     app = create_app(config={"TESTING": True})
 
     # Set the FLASK_ENV environment variable to "testing"
     app.config["ENV"] = "testing"
 
+    yield app
+
+
+@pytest.fixture(autouse=True)
+def client(app):
     client = app.test_client()
 
     yield client
