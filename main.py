@@ -17,6 +17,7 @@ from blueprints.reports.getReports import getreports_bp
 from blueprints.counts.counts import counts_bp
 from blueprints.manageUser.viewUsers import getAllUsers_bp
 from blueprints.manageUser.deleteUser import deleteUser_bp
+from flask_cors import CORS
 
 from datetime import datetime, timedelta
 import random
@@ -28,6 +29,7 @@ verification_codes = {}
 
 def create_app(config=None):
     app = Flask(__name__)
+    CORS(app)
 
     # Register blueprints
     app.register_blueprint(recentAdLocation_bp)
