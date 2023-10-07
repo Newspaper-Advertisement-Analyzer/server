@@ -59,6 +59,5 @@ def create_app(config=None):
     return app
 
 
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+app = create_app()
+app.run(debug=True)
