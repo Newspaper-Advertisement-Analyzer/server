@@ -1,7 +1,8 @@
 import pytesseract
 from PIL import Image
 import PyPDF2
-import fitz  # PyMuPDF
+# import fitz  # PyMuPDF
+
 
 def extract_text_from_image(image_path):
     # Perform text extraction using Tesseract
@@ -29,8 +30,6 @@ def pdftotext(path):
     data.close()
 
     return text
-
-
 
 
 def pdftotext_ocr(pdf_path):
