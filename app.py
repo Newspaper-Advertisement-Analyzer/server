@@ -1,6 +1,7 @@
 from flask import Flask
+from flask_cors import CORS
 
-# import blue prints
+# Import your blueprints here
 from blueprints.advertisementMap.adverisementMap import recentAdLocation_bp
 from blueprints.authentication.signup import signUp_bp
 from blueprints.authentication.signin import signIn_bp
@@ -17,47 +18,44 @@ from blueprints.reports.getReports import getreports_bp
 from blueprints.counts.counts import counts_bp
 from blueprints.manageUser.viewUsers import getAllUsers_bp
 from blueprints.manageUser.deleteUser import deleteUser_bp
-from flask_cors import CORS
 
+# Import other necessary modules
 from datetime import datetime, timedelta
 import random
-
 from sendEmail.sendVerificstionCode import send_advanced_email
 
-verification_codes = {}
+# Create the Flask app
+app = Flask(__name__)
 
+# Enable CORS for the app
+CORS(app)
 
-def create_app(config=None):
-    app = Flask(__name__)
-    CORS(app)
+# Register your blueprints
+app.register_blueprint(recentAdLocation_bp)
+app.register_blueprint(signUp_bp)
+app.register_blueprint(signIn_bp)
+app.register_blueprint(upload_bp)
+app.register_blueprint(averageSale_bp)
+app.register_blueprint(adDistribution_bp)
+app.register_blueprint(categorizebyAge_bp)
+app.register_blueprint(houseSalebyCity_bp)
+app.register_blueprint(recentAd_bp)
+app.register_blueprint(popularAd_bp)
+app.register_blueprint(searchByFilters_bp)
+app.register_blueprint(reports_bp)
+app.register_blueprint(getreports_bp)
+app.register_blueprint(counts_bp)
+app.register_blueprint(getAllUsers_bp)
+app.register_blueprint(deleteUser_bp)
 
-    # Register blueprints
-    app.register_blueprint(recentAdLocation_bp)
-    app.register_blueprint(signUp_bp)
-    app.register_blueprint(signIn_bp)
-    app.register_blueprint(upload_bp)
-    app.register_blueprint(averageSale_bp)
-    app.register_blueprint(adDistribution_bp)
-    app.register_blueprint(categorizebyAge_bp)
-    app.register_blueprint(houseSalebyCity_bp)
-    app.register_blueprint(recentAd_bp)
-    app.register_blueprint(popularAd_bp)
-    app.register_blueprint(searchByFilters_bp)
-    app.register_blueprint(reports_bp)
-    app.register_blueprint(getreports_bp)
-    app.register_blueprint(counts_bp)
-    app.register_blueprint(getAllUsers_bp)
-    app.register_blueprint(deleteUser_bp)
+# Configure any app-specific settings here
+app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
+app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
 
-    app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
-    app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
+# Optionally, you can add more configuration settings or initialize other components here.
 
-    # Configure the app using the provided config
-    if config is not None:
-        app.config.update(config)
+# Define your routes and other application logic as needed.
 
-    return app
-
-
-app = create_app()
-app.run(debug=True, port=8000)
+if __name__ == '__main__':
+    # This block will only execute if you run this script directly (not when imported)
+    app.run(debug=True)
