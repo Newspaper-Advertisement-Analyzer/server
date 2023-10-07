@@ -30,6 +30,7 @@ filelock==3.12.2
 fitz==0.0.1.dev2
 Flask==2.3.2
 Flask-Bcrypt==1.0.1
+Flask-Cors==4.0.0
 frontend==0.0.3
 future==0.18.3
 gevent==23.9.1
