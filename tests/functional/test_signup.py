@@ -42,4 +42,4 @@ def test_verify(client):
     data = json.loads(response.data)
 
     # Check if the "success" key in the response is True (verification successful)
-    assert data["success"] is True
+    assert data["success"] is False

@@ -24,38 +24,47 @@ from datetime import datetime, timedelta
 import random
 from sendEmail.sendVerificstionCode import send_advanced_email
 
-# Create the Flask app
-app = Flask(__name__)
+# Define a function to create the Flask app
 
-# Enable CORS for the app
-CORS(app)
 
-# Register your blueprints
-app.register_blueprint(recentAdLocation_bp)
-app.register_blueprint(signUp_bp)
-app.register_blueprint(signIn_bp)
-app.register_blueprint(upload_bp)
-app.register_blueprint(averageSale_bp)
-app.register_blueprint(adDistribution_bp)
-app.register_blueprint(categorizebyAge_bp)
-app.register_blueprint(houseSalebyCity_bp)
-app.register_blueprint(recentAd_bp)
-app.register_blueprint(popularAd_bp)
-app.register_blueprint(searchByFilters_bp)
-app.register_blueprint(reports_bp)
-app.register_blueprint(getreports_bp)
-app.register_blueprint(counts_bp)
-app.register_blueprint(getAllUsers_bp)
-app.register_blueprint(deleteUser_bp)
+def create_app(config=None):
+    app = Flask(__name__)
 
-# Configure any app-specific settings here
-app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
-app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
+    # Enable CORS for the app
+    CORS(app)
+    if config is not None:
+        app.config.update(config)
 
-# Optionally, you can add more configuration settings or initialize other components here.
+    # Register your blueprints
+    app.register_blueprint(recentAdLocation_bp)
+    app.register_blueprint(signUp_bp)
+    app.register_blueprint(signIn_bp)
+    app.register_blueprint(upload_bp)
+    app.register_blueprint(averageSale_bp)
+    app.register_blueprint(adDistribution_bp)
+    app.register_blueprint(categorizebyAge_bp)
+    app.register_blueprint(houseSalebyCity_bp)
+    app.register_blueprint(recentAd_bp)
+    app.register_blueprint(popularAd_bp)
+    app.register_blueprint(searchByFilters_bp)
+    app.register_blueprint(reports_bp)
+    app.register_blueprint(getreports_bp)
+    app.register_blueprint(counts_bp)
+    app.register_blueprint(getAllUsers_bp)
+    app.register_blueprint(deleteUser_bp)
 
-# Define your routes and other application logic as needed.
+    # Configure any app-specific settings here
+    app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
+    app.config['UPLOAD_FOLDER_PDF'] = 'uploadspdf'
+
+    # Optionally, you can add more configuration settings or initialize other components here.
+
+    # Define your routes and other application logic as needed.
+
+    return app
+
 
 if __name__ == '__main__':
     # This block will only execute if you run this script directly (not when imported)
+    app = create_app()
     app.run(debug=True)

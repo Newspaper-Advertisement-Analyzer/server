@@ -8,3 +8,5 @@ def houseSalebyCity():
     data = categorizeHousesaleByCity()
     print(data)
     return(jsonify(data))
+
+    
