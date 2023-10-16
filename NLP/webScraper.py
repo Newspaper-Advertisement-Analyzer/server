@@ -6,6 +6,7 @@ from NLP.findcatogory import identify_catogory
 from NLP.findprice import identify_price
 from NLP.findcontacts import extract_contacts
 
+from NLP.getPhoneNumbers import get_Phone_Numbers
 
 
 def extract_article_info(url):
@@ -33,15 +34,11 @@ def extract_article_info(url):
     # Extract keywords
     keywords = article.keywords
 
-
     # locations = extract_addresses_with_geocoding(text)
-    locations = extract_locations(text)
-    catogory = identify_catogory(text)
+    catogory = identify_catogory(text + title)
     price = identify_price(text)
-    contact = extract_contacts(text)
-    if locations == None:
-        locations = extract_locations(title)
+    phone = get_Phone_Numbers(text, url)
+    locations = extract_locations(text + title)
 
-
-    return title, text, summary, keywords, catogory, price, contact, locations
+    return title, text, summary, keywords, catogory, price, phone, locations
     return summary, title, text, keywords, locations, catogory, price, contact
