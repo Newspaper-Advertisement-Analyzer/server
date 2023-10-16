@@ -41,10 +41,16 @@ def getReportById(report_id, dbName=db):
         return None
 
 
-def getReports(dbName=db):
+def getReports(userID, dbName=db):
     try:
-        # Retrieve all the reports from the 'reports' collection
-        reports = list(dbName.Report.find({}, {"_id": 0}))
+        # Retrieve reports for the specified userID from the 'reports' collection
+        reports = list(dbName.Report.find({"UserID": userID}, {"_id": 0}))
+
+        # Optionally, convert the BSON date to a string in a suitable format (e.g., ISO 8601)
+        for report in reports:
+            report["timestamp"] = report["timestamp"].strftime(
+                "%Y-%m-%dT%H:%M:%S")
+        print(reports)
         return reports
     except Exception as e:
         # Handle any errors that occur during retrieval

@@ -1,13 +1,15 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime, timedelta
-from Database.userSignUp import add_user,find_user,validate_user
+from Database.userSignUp import add_user, find_user, validate_user
 from sendEmail.sendVerificstionCode import send_advanced_email
 import random
+from bson.objectid import ObjectId
 
 verification_codes = {}
 pending_registrations = {}
 
 signUp_bp = Blueprint("signup", __name__)
+
 
 @signUp_bp.route("/signup", methods=["POST"])
 def signup():
@@ -16,13 +18,12 @@ def signup():
     name = request.json["name"]
 
     print("------------------signup code is called------------------")
-    print(email, password,name)
+    print(email, password, name)
 
-    if find_user(email) is not None :
+    if find_user(email) is not None:
         return jsonify({"error": "Email already exists"}), 409
-        
 
-    verification_code = random.randint(100000, 999999) 
+    verification_code = random.randint(100000, 999999)
     expiration_time = datetime.now() + timedelta(minutes=1)
     pending_registrations[email] = {
         "code": verification_code,
@@ -37,6 +38,7 @@ def signup():
     send_advanced_email(email, verification_code)
 
     return jsonify({"message": "Verification code sent."})
+
 
 @signUp_bp.route("/verify", methods=["POST"])
 def verify():
@@ -53,7 +55,18 @@ def verify():
             add_user(user_data["name"], email, user_data["password"])
             del pending_registrations[email]
             print("Registration successful")
-            return jsonify({"success": True})
+            user = find_user(email)
+            user_data = {
+                "Full_Name": user["Full_Name"],
+                "UserID": str(user["_id"]),
+                "email": user["email"],
+                "Contact_Number": user["Contact_Number"],
+                "User_Name": user["User_Name"],
+                "Registration_Date": user["Registration_Date"],
+                "Profession": user["Profession"],
+                "Role": user["Role"]
+            }
+            return jsonify({"success": True, "user": user_data})
         else:
             del pending_registrations[email]
             print("Registration failed")

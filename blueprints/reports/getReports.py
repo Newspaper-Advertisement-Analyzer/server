@@ -6,11 +6,20 @@ import json  # Import the json module to use json.dumps
 
 getreports_bp = Blueprint("getreports", __name__)
 
-@getreports_bp.route('/get-all-reports', methods=['GET'])
+
+@getreports_bp.route('/get-all-reports', methods=['POST'])
 def getAllReports():
-    # Call the getReports function to retrieve all reports
-    reports = getReports()
-    for report in reports:
-        # Convert the BSON date to a string in a suitable format (e.g., ISO 8601)
-        report["timestamp"] = report["timestamp"].strftime("%Y-%m-%dT%H:%M:%S")
-    return dumps(reports)
+    try:
+        data = request.get_json()
+        userID = data.get('userID')
+        if not userID:
+            return jsonify({"error": "UserID is required"}), 400
+
+        # Call the getReports function to retrieve reports for the specified userID
+        reports = getReports(userID)
+        if reports is not None:
+            return dumps(reports)
+        else:
+            return jsonify({"error": "Error retrieving reports"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
