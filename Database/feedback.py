@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 from bson import ObjectId
 from bson.json_util import dumps
@@ -26,6 +27,9 @@ def saveFeedback(rating, feedback, publish, userID):
     return result.inserted_id
 
 
+# ... (your existing imports and code)
+
+
 def getAllPublishedFeedbacks():
     collection = db.Feedback
 
@@ -38,5 +42,13 @@ def getAllPublishedFeedbacks():
     # Convert the ObjectId to string for each document
     for feedback in published_feedbacks:
         feedback["_id"] = str(feedback["_id"])
+
+        # Get the user details based on the userID
+        user = db.User.find_one({"_id": ObjectId(feedback["userID"])})
+
+        # Add user details to the feedback
+        if user:
+            feedback["user_name"] = user["Full_Name"]
+            feedback["user_email"] = user["email"]
 
     return published_feedbacks

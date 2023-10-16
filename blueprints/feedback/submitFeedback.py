@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
-from Database.feedback import saveFeedback
+from Database.feedback import saveFeedback, getAllPublishedFeedbacks
+from bson.json_util import dumps
 
 feedback_bp = Blueprint("feedback", __name__)
 
@@ -22,3 +23,14 @@ def submitFeedback():
     except Exception as e:
         # Return an error message if there was an issue processing or saving the feedback data.
         return jsonify({"error": str(e)})
+
+
+@feedback_bp.route('/getFeedbackData', methods=['GET'])
+def getFeedbacks():
+    try:
+        feedbacks = list(getAllPublishedFeedbacks())
+        print(feedbacks)
+        return dumps(feedbacks)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
