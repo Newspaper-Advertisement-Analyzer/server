@@ -19,6 +19,7 @@ from blueprints.counts.counts import counts_bp
 from blueprints.manageUser.viewUsers import getAllUsers_bp
 from blueprints.manageUser.deleteUser import deleteUser_bp
 from blueprints.feedback.submitFeedback import feedback_bp
+from blueprints.manageUser.updateUser import updateUser_bp
 # Import other necessary modules
 from datetime import datetime, timedelta
 import random
@@ -48,6 +49,7 @@ app.register_blueprint(counts_bp)
 app.register_blueprint(getAllUsers_bp)
 app.register_blueprint(deleteUser_bp)
 app.register_blueprint(feedback_bp)
+app.register_blueprint(updateUser_bp)
 
 # Configure any app-specific settings here
 app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'
