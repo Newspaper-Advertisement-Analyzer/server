@@ -35,7 +35,7 @@ def signup():
     print("verification code: ", verification_code)
 
     # send email to the user
-    send_advanced_email(email, verification_code)
+    # send_advanced_email(email, verification_code)
 
     return jsonify({"message": "Verification code sent."})
 

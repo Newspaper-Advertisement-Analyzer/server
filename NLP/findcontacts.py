@@ -3,6 +3,7 @@ import re
 
 
 def extract_contacts(text):
+
     # Regular expression patterns to match phone numbers
     pattern1 = r'\+94\s(\d{2})\s(\d{3})\s(\d{4})'
     pattern2 = r'0(\d{2})\s(\d{3})\s(\d{4})'

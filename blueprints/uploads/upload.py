@@ -8,9 +8,9 @@ from NLP.pdf_to_text import pdftotext
 from NLP.pdf_to_text import pdftotext_ocr
 
 
-import threading
+# import threading
 from NLP.webScraper import extract_article_info
-from flask import Flask, make_response, send_from_directory
+# from flask import Flask, make_response, send_from_directory
 # from NLP.oldwebScaper import extract_article_text
 from NLP.webScraper import extract_article_info
 from werkzeug.utils import secure_filename
@@ -22,11 +22,13 @@ upload_bp = Blueprint("upload", __name__)
 @upload_bp.route('/members', methods=['POST', 'GET'])
 def members():
     inp = request.json.get("inp")
-    print(inp)  # this is the URl
+    print("link is ",inp)  # this is the URl
     try:
         # article_data = scrape_article_data(inp)
         # print("link is ",article_data) this is wrong
 
+        print("analyze_advertisement is going to run")
+        
         location, category, contact_info, prices = analyze_advertisement(inp)
         ad_data = {
             "position": "Default",
