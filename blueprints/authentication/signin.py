@@ -59,7 +59,8 @@ def login_user():
             "User_Name": user["User_Name"],
             "Registration_Date": user["Registration_Date"],
             "Profession": user["Profession"],
-            "Role": user["Role"]
+            "Role": user["Role"],
+            "Profile_Picture": user["Profile_Picture"] if "Profile_Picture" in user else None
         }
         return jsonify({"message": "Success! You are now logged in.", "user": user_data})
     else:

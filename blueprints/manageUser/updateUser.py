@@ -25,3 +25,21 @@ def update_user():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@updateUser_bp.route('/updateProfilePicture', methods=['POST'])
+def update_profile_picture():
+    try:
+        data = request.get_json()
+        # Ensure you are getting the correct user ID
+        user_id = data.get("userId")
+        update_data = {
+            "Profile_Picture": data.get("url"),
+        }
+        if updateUserById(user_id, update_data):
+            return jsonify({"message": "User information updated successfully"})
+        else:
+            return jsonify({"error": "Failed to update user information"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
