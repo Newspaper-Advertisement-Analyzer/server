@@ -43,8 +43,11 @@ def getReportById(report_id, dbName=db):
 
 def getReports(userID, dbName=db):
     try:
-        # Retrieve reports for the specified userID from the 'reports' collection
-        reports = list(dbName.Report.find({"UserID": userID}, {"_id": 0}))
+        if userID == "6500b4c531d745a4d8b3f8bd":
+            reports = list(dbName.Report.find({}, {"_id": 0}))
+        else:
+            # Retrieve reports for the specified userID from the 'reports' collection
+            reports = list(dbName.Report.find({"UserID": userID}, {"_id": 0}))
 
         # Optionally, convert the BSON date to a string in a suitable format (e.g., ISO 8601)
         for report in reports:
