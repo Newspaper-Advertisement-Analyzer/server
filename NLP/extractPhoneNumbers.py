@@ -1,20 +1,20 @@
 import re
 
 def extract_phone_num(text):
-    pattern1 = r'\+94\s(\d{2})\s(\d{3})\s(\d{4})'
-    pattern2 = r'0(\d{2})\s(\d{3})\s(\d{4})'
-    pattern3 = r'0(\d{9})'
+    pattern = r'(?:(\+94|\b0)\s?)?(\d{2})\s?(\d{3})\s?(\d{4}|\d{5})'
 
-    matches1 = re.findall(pattern1, text)
-    matches2 = re.findall(pattern2, text)
-    matches3 = re.findall(pattern3, text)
+    matches = re.findall(pattern, text)
 
-    phone_numbers = ['+94 ' + ''.join(match) for match in matches1]
-    phone_numbers += ['0' + ''.join(match) for match in matches2]
-    phone_numbers += ['0' + match for match in matches3]
+    phone_numbers = []
 
-    if len(phone_numbers) == 0:
+    for match in matches:
+        country_code, area_code, first_part, second_part = match
+        full_number = f"{country_code or '0'}{area_code} {first_part} {second_part}"
+        phone_numbers.append(full_number)
+
+    if not phone_numbers:
         return None
+
     return ', '.join(phone_numbers)
 
 
