@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from Database.landSale import saveLandSaleAdvertisement
+from Database.houseSale import saveHouseSaleAdvertisement
+from Database.marriageProposal import saveMarriageProposalAdvertisement
 
 advertisement_bp = Blueprint("advertisement", __name__)
 

@@ -193,7 +193,7 @@ def saveHouseSaleAdvertisement(title, location, date, description, image, price,
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
-        result = db.LandSale_Advertisement.insert_one({
+        result = db.HouseSale_Advertisement.insert_one({
             # Generate a unique ID for the advertisement
             "Advertisement_ID": generate_unique_id(),
             "Title": title,
