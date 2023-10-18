@@ -13,7 +13,7 @@ def submit_advertisement():
         category = data.get("category")
 
         if category == "Land Sale":
-            result = saveLandSaleAdvertisement(data.get("title"), data.get("location"), data.get("date"),
+            result = saveLandSaleAdvertisement(data.get("title"), data.get("location"), data.get("postedOn"),
                                                data.get("description"), data.get(
                                                    "image"), data.get("pricePerPerch"),
                                                data.get("numberOfPerches"), data.get(
@@ -22,7 +22,7 @@ def submit_advertisement():
                                                    "email"), data.get("nearestCity"),
                                                data.get("address"), data.get("landMarks"))
         elif category == "House Sale":
-            result = saveHouseSaleAdvertisement(data.get("title"), data.get("location"), data.get("date"),
+            result = saveHouseSaleAdvertisement(data.get("title"), data.get("location"), data.get("postedOn"),
                                                 data.get("description"), data.get(
                                                     "image"), data.get("price"),
                                                 data.get("numberOfRooms"), data.get(
@@ -31,7 +31,7 @@ def submit_advertisement():
                                                     "email"), data.get("nearestCity"),
                                                 data.get("address"))
         elif category == "Marriage Proposals":
-            result = saveMarriageProposalAdvertisement(data.get("title"), data.get("location"), data.get("date"),
+            result = saveMarriageProposalAdvertisement(data.get("title"), data.get("location"), data.get("postedOn"),
                                                        data.get("description"), data.get(
                                                            "image"), data.get("gender"),
                                                        data.get("age"), data.get(

@@ -22,13 +22,13 @@ upload_bp = Blueprint("upload", __name__)
 @upload_bp.route('/members', methods=['POST', 'GET'])
 def members():
     inp = request.json.get("inp")
-    print("link is ",inp)  # this is the URl
+    print("link is ", inp)  # this is the URl
     try:
         # article_data = scrape_article_data(inp)
         # print("link is ",article_data) this is wrong
 
         print("analyze_advertisement is going to run")
-        
+
         location, category, contact_info, prices = analyze_advertisement(inp)
         ad_data = {
             "position": "Default",
@@ -70,6 +70,7 @@ def receive_url_from_frontend():
     results = extract_article_info(url)
 
     print(url)
+    print(results)
 
     return jsonify({'results': results})
 
@@ -143,11 +144,12 @@ def upload_pdf():
         upload_folder = current_app.config['UPLOAD_FOLDER_PDF']
         pdf.save(os.path.join(upload_folder, filename))
 
-        if (isImageContained=="true"):
-            extracted_text = (pdftotext_ocr(os.path.join(upload_folder, filename)))
+        if (isImageContained == "true"):
+            extracted_text = (pdftotext_ocr(
+                os.path.join(upload_folder, filename)))
         else:
             extracted_text = (pdftotext(os.path.join(upload_folder, filename)))
-            
+
         print(extracted_text)
         result.append(analyze_advertisement_img(extracted_text))
     return jsonify({'message': result})

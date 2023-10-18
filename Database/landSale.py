@@ -175,15 +175,16 @@ def saveLandSaleAdvertisement(title, location, date, description, image, pricePe
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
+        posted_date = datetime.strptime(date, '%Y-%m-%d')
         result = db.LandSale_Advertisement.insert_one({
             # Generate a unique ID for the advertisement
             "Advertisement_ID": generate_unique_id(2),
             "Title": title,
-            "Posted_Date": date,
+            "Posted_Date": posted_date,
             "Description": description,
             "Image": image,
             "Price_per_Perch": pricePerPerch,
-            "Number_of_Perch": numberOfPerches,
+            "Number_of_Perch": int(numberOfPerches),
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
