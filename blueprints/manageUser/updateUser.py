@@ -52,7 +52,7 @@ def update_last_seen():
         # Ensure you are getting the correct user ID
         user_id = data.get("userId")
         update_data = {
-            "Last_Seen": data.get("lastSeen"),
+            "Last_Seen": data.get("last_seen"),
         }
         if updateUserById(user_id, update_data):
             return jsonify({"message": "User information updated successfully"})
