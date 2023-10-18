@@ -6,13 +6,14 @@ from NLP.detailextract import analyze_advertisement
 from NLP.detailextract import analyze_advertisement_img
 from NLP.pdf_to_text import pdftotext
 from NLP.pdf_to_text import pdftotext_ocr
-
+from NLP.webScraper import extract_category
 
 # import threading
 from NLP.webScraper import extract_article_info
 # from flask import Flask, make_response, send_from_directory
 # from NLP.oldwebScaper import extract_article_text
 from NLP.webScraper import extract_article_info
+from NLP.webScraper import extract_url
 from werkzeug.utils import secure_filename
 import os
 
@@ -67,10 +68,10 @@ def receive_url_from_frontend():
     data = request.get_json()
     url = data.get('url')
 
-    results = extract_article_info(url)
-
-    print(url)
-    print(results)
+    article = extract_url(url)
+    category = extract_category(article)
+    if (category != "Marriage Proposals"):
+        results = extract_article_info(article, url)
 
     return jsonify({'results': results})
 
