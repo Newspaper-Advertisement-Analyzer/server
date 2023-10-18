@@ -15,13 +15,13 @@ def add_user(name, email, password, dbName=db):
     try:
         dbName.User.insert_one({
             "Full_Name": name,
-            "email": email,
+            "Email": email,
             "password": hashed_password,
             "Contact_Number": None,
             "User_Name": name,
             "Registration_Date": datetime.now(),
             "Profession": None,
-            "Role": "user"
+            "Role": "user",
         })
         return True
     except Exception as e:
@@ -31,7 +31,7 @@ def add_user(name, email, password, dbName=db):
 
 def delete_user(email, dbName=db):
     try:
-        dbName.User.delete_one({"email": email})
+        dbName.User.delete_one({"Email": email})
         return True
     except Exception as e:
         print(e)
@@ -39,12 +39,12 @@ def delete_user(email, dbName=db):
 
 
 def find_user(email, dbName=db):
-    user = dbName.User.find_one({"email": email})
+    user = dbName.User.find_one({"Email": email})
     return user
 
 
 def validate_user(email, password, dbName=db):
-    user = dbName.User.find_one({"email": email})
+    user = dbName.User.find_one({"Email": email})
     if user is None:
         return False
     if not bcrypt.check_password_hash(user["password"], password):

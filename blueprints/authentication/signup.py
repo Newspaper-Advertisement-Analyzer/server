@@ -56,15 +56,17 @@ def verify():
             del pending_registrations[email]
             print("Registration successful")
             user = find_user(email)
+            print(user)
             user_data = {
                 "Full_Name": user["Full_Name"],
                 "UserID": str(user["_id"]),
-                "email": user["email"],
+                "email": user["Email"],
                 "Contact_Number": user["Contact_Number"],
                 "User_Name": user["User_Name"],
                 "Registration_Date": user["Registration_Date"],
                 "Profession": user["Profession"],
-                "Role": user["Role"]
+                "Role": user["Role"],
+                "Profile_Picture": user["Profile_Picture"] if "Profile_Picture" in user else None,
             }
             print(user_data)
             return jsonify({"success": True, "user": user_data})

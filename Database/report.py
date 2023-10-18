@@ -43,7 +43,7 @@ def getReportById(report_id, dbName=db):
 
 def getReports(userID, dbName=db):
     try:
-        if userID == "6500b4c531d745a4d8b3f8bd":
+        if userID == "652f90e5ccd656ca61515429":
             reports = list(dbName.Report.find({}, {"_id": 0}))
         else:
             # Retrieve reports for the specified userID from the 'reports' collection

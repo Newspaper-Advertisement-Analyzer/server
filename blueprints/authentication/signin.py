@@ -54,13 +54,14 @@ def login_user():
         user_data = {
             "Full_Name": user["Full_Name"],
             "UserID": str(user["_id"]),
-            "email": user["email"],
+            "email": user["Email"],
             "Contact_Number": user["Contact_Number"],
             "User_Name": user["User_Name"],
             "Registration_Date": user["Registration_Date"],
             "Profession": user["Profession"],
             "Role": user["Role"],
-            "Profile_Picture": user["Profile_Picture"] if "Profile_Picture" in user else None
+            "Profile_Picture": user["Profile_Picture"] if "Profile_Picture" in user else None,
+            "Last_Seen": user["Last_Seen"] if "Last_Seen" in user else ""
         }
         return jsonify({"message": "Success! You are now logged in.", "user": user_data})
     else:

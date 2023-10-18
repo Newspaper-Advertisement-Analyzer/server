@@ -43,3 +43,21 @@ def update_profile_picture():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@updateUser_bp.route('/updateLastSeen', methods=['POST'])
+def update_last_seen():
+    try:
+        data = request.get_json()
+        # Ensure you are getting the correct user ID
+        user_id = data.get("userId")
+        update_data = {
+            "Last_Seen": data.get("lastSeen"),
+        }
+        if updateUserById(user_id, update_data):
+            return jsonify({"message": "User information updated successfully"})
+        else:
+            return jsonify({"error": "Failed to update user information"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
