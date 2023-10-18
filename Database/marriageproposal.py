@@ -8,19 +8,6 @@ from Database.db_connector import db
 from Database.idGenerate import generate_unique_id
 
 
-# Global variable to keep track of the last ID
-
-
-# Example of how to use the function
-generated_id = generate_unique_id()
-print(generated_id)
-
-
-# Example of how to use the function
-generated_id = generate_unique_id()
-print(generated_id)
-
-
 def countMarriageProposals():
     count = db.HouseSale_Advertisement.count_documents({})
     return count
@@ -200,13 +187,13 @@ def getLatestMarriageProposalSaleAd(limit=2):
     return advertisements
 
 
-def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, postedOn, source, phoneNumbers, email, nearestCity, address):
+def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, requirements, postedOn, source, phoneNumbers, email, nearestCity, address):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
         result = db.Marriage_Proposal.insert_one({
             # Generate a unique ID for the advertisement
-            "Advertisement_ID": generate_unique_id(),
+            "Advertisement_ID": generate_unique_id(3),
             "Title": title,
             "Posted_Date": date,
             "Description": description,
@@ -220,6 +207,7 @@ def saveMarriageProposalAdvertisement(title, location, date, description, image,
             "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
             "Location": {"City": nearestCity},
             "Address": address,
+            "Special_Requirements": requirements
         })
         return result.inserted_id
     except Exception as e:

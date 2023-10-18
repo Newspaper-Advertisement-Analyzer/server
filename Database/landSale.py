@@ -177,7 +177,7 @@ def saveLandSaleAdvertisement(title, location, date, description, image, pricePe
     try:
         result = db.LandSale_Advertisement.insert_one({
             # Generate a unique ID for the advertisement
-            "Advertisement_ID": generate_unique_id(),
+            "Advertisement_ID": generate_unique_id(2),
             "Title": title,
             "Posted_Date": date,
             "Description": description,
