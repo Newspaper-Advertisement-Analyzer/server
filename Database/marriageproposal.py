@@ -5,6 +5,20 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
+from Database.idGenerate import generate_unique_id
+
+
+# Global variable to keep track of the last ID
+
+
+# Example of how to use the function
+generated_id = generate_unique_id()
+print(generated_id)
+
+
+# Example of how to use the function
+generated_id = generate_unique_id()
+print(generated_id)
 
 
 def countMarriageProposals():
@@ -184,3 +198,30 @@ def getLatestMarriageProposalSaleAd(limit=2):
     advertisements = recent_advertisements
 
     return advertisements
+
+
+def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, postedOn, source, phoneNumbers, email, nearestCity, address):
+    # Implement the logic to save land sale advertisements in the database
+    # Example code:
+    try:
+        result = db.LandSale_Advertisement.insert_one({
+            # Generate a unique ID for the advertisement
+            "Advertisement_ID": generate_unique_id(),
+            "Title": title,
+            "Posted_Date": date,
+            "Description": description,
+            "Image": image,
+            "Gender": gender,
+            "Age": age,
+            "Profession": profession,
+            "Nationality": nationality,
+            "Posted_On": postedOn,
+            "Source": source,
+            "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
+            "Location": {"City": nearestCity},
+            "Address": address,
+        })
+        return result.inserted_id
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None

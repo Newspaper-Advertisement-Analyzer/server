@@ -5,18 +5,22 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
+from Database.idGenerate import generate_unique_id
+
 
 def getAverageHousePriceByTimePeriod(time_period, district):
     # Define time_period_to_timedelta mapping
     time_period_to_timedelta = {
         "Weekly": timedelta(weeks=5),
-        "Monthly":timedelta(days=365 / 12),  # Approximately 30.44 days per month
+        # Approximately 30.44 days per month
+        "Monthly": timedelta(days=365 / 12),
         "Yearly": timedelta(days=365),
     }
 
     # Calculate the date based on the specified time_period
     end_date = datetime.now()
-    start_date = end_date - time_period_to_timedelta.get(time_period, timedelta(days=365))
+    start_date = end_date - \
+        time_period_to_timedelta.get(time_period, timedelta(days=365))
 
     # Define the date format for grouping
     date_format = {
@@ -47,7 +51,8 @@ def getAverageHousePriceByTimePeriod(time_period, district):
             }
         },
         {
-            "$sort": {"_id": 1}  # Sort by the specified time period in ascending order
+            # Sort by the specified time period in ascending order
+            "$sort": {"_id": 1}
         }
     ]
 
@@ -64,16 +69,17 @@ def getAverageHousePriceByTimePeriod(time_period, district):
     return result
 
 
-
 def countHousesale():
     count = db.HouseSale_Advertisement.count_documents({})
     return count
+
 
 def categorizeHousesaleByCity():
     pipeline = [
         {
             "$match": {
-                "Location.City": {"$exists": True},  # Specify the path to the city field
+                # Specify the path to the city field
+                "Location.City": {"$exists": True},
             }
         },
         {
@@ -103,7 +109,8 @@ def getRecentHouseSaleAdvertisements(limit=15):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.HouseSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.HouseSale_Advertisement.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
@@ -131,7 +138,8 @@ def getRecentHouseSaleAdLocation(duration, limit=15):
         start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     elif duration == "Yesterday":
         # Retrieve records from yesterday
-        start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+        start_date = datetime.now().replace(hour=0, minute=0, second=0,
+                                            microsecond=0) - timedelta(days=1)
     elif duration == "LastWeek":
         # Retrieve records from the start of the previous week
         today = datetime.now()
@@ -151,7 +159,8 @@ def getRecentHouseSaleAdLocation(duration, limit=15):
     query = {"$and": [date_filter]}
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.HouseSale_Advertisement.find(query, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.HouseSale_Advertisement.find(
+        query, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisements_list = list(recent_advertisements)
@@ -163,7 +172,7 @@ def getLatestHouseSaleAd(limit=3):
     # Define the fields to be extracted
     projection = {
         "_id": 0,  # Exclude the MongoDB document ID
-         "Advertisement_ID": 1,
+        "Advertisement_ID": 1,
         "Title": 1,
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
@@ -171,9 +180,35 @@ def getLatestHouseSaleAd(limit=3):
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
-    recent_advertisements = db.HouseSale_Advertisement.find({}, projection).sort("Posted_Date", -1).limit(limit)
+    recent_advertisements = db.HouseSale_Advertisement.find(
+        {}, projection).sort("Posted_Date", -1).limit(limit)
 
     # Convert the cursor to a list of dictionaries
     advertisement = recent_advertisements
 
     return advertisement
+
+
+def saveHouseSaleAdvertisement(title, location, date, description, image, price, numberOfRooms, postedOn, source, phoneNumbers, email, nearestCity, address):
+    # Implement the logic to save land sale advertisements in the database
+    # Example code:
+    try:
+        result = db.LandSale_Advertisement.insert_one({
+            # Generate a unique ID for the advertisement
+            "Advertisement_ID": generate_unique_id(),
+            "Title": title,
+            "Posted_Date": date,
+            "Description": description,
+            "Image": image,
+            "Price": price,
+            "Number_of_Rooms": numberOfRooms,
+            "Posted_On": postedOn,
+            "Source": source,
+            "Contact_Info": {"Phone_Number": [phoneNumbers], "Email": email},
+            "Location": {"City": nearestCity},
+            "Address": address,
+        })
+        return result.inserted_id
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None

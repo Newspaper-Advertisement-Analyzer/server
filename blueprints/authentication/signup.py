@@ -66,6 +66,7 @@ def verify():
                 "Profession": user["Profession"],
                 "Role": user["Role"]
             }
+            print(user_data)
             return jsonify({"success": True, "user": user_data})
         else:
             del pending_registrations[email]

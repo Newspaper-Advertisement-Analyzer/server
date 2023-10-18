@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import os
 from Database.db_connector import db
+from Database.idGenerate import generate_unique_id
 
 
 def getAverageLandPriceByTimePeriod(time_period, district):
@@ -168,3 +169,29 @@ def getLatestLandSaleAd(limit=3):
     advertisements = recent_advertisements
 
     return advertisements
+
+
+def saveLandSaleAdvertisement(title, location, date, description, image, pricePerPerch, numberOfPerches, postedOn, source, phoneNumbers, email, nearestCity, address, landMarks):
+    # Implement the logic to save land sale advertisements in the database
+    # Example code:
+    try:
+        result = db.LandSale_Advertisement.insert_one({
+            # Generate a unique ID for the advertisement
+            "Advertisement_ID": generate_unique_id(),
+            "Title": title,
+            "Posted_Date": date,
+            "Description": description,
+            "Image": image,
+            "Price_per_Perch": pricePerPerch,
+            "Number_of_Perch": numberOfPerches,
+            "Posted_On": postedOn,
+            "Source": source,
+            "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
+            "Location": {"City": nearestCity},
+            "Address": address,
+            "Special_Landmarks": landMarks
+        })
+        return result.inserted_id
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
