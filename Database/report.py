@@ -58,6 +58,7 @@ def getReports(userID, dbName=db):
     except Exception as e:
         # Handle any errors that occur during retrieval
         return None
+# report
 
 
 def countReports(dbName=db):
