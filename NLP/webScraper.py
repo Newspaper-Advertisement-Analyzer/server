@@ -35,7 +35,6 @@ def extract_url(url):
     # keywords = article.keywords
     # authors = article.authors
 
-
     # date = article.publish_date
 
     # # locations = extract_addresses_with_geocoding(text)
@@ -49,6 +48,7 @@ def extract_url(url):
     # return title, text, summary, keywords, catogory, price, phone, locations, email, None, date
     # return summary, title, text, keywords, locations, catogory, price, contact
 
+
 def extract_category(article):
     title = article.title
 
@@ -59,7 +59,7 @@ def extract_category(article):
 
 
 def extract_article_info(article, url):
-     # Extract title
+    # Extract title
     title = article.title
 
     # Extract text
@@ -72,15 +72,13 @@ def extract_article_info(article, url):
     keywords = article.keywords
     authors = article.authors
 
-
     date = article.publish_date
 
     # locations = extract_addresses_with_geocoding(text)
     catogory = identify_catogory(text + title)
     price = identify_price(text)
-    phone = get_Phone_Numbers(text, url)
+    phone = list(get_Phone_Numbers(text, url))
     email = extract_emails(text)
     locations = extract_locations(text + " " + title)
 
     return title, text, summary, keywords, catogory, price, phone, locations, email, None, date
-

@@ -7,6 +7,7 @@ from NLP.detailextract import analyze_advertisement_img
 from NLP.pdf_to_text import pdftotext
 from NLP.pdf_to_text import pdftotext_ocr
 from NLP.webScraper import extract_category
+from Database.pendingAdvertisement import add_pending_advertisement
 
 # import threading
 from NLP.webScraper import extract_article_info
@@ -67,11 +68,15 @@ def process_image():
 def receive_url_from_frontend():
     data = request.get_json()
     url = data.get('url')
-
+    isPublished = data.get('publish')
+    print("isPublished", isPublished)
     article = extract_url(url)
     category = extract_category(article)
     if (category != "Marriage Proposals"):
         results = extract_article_info(article, url)
+
+    if (isPublished == True):
+        add_pending_advertisement(results)
 
     return jsonify({'results': results})
 
