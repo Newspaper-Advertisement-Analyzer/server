@@ -5,6 +5,7 @@ from flask_cors import CORS
 from blueprints.advertisementMap.adverisementMap import recentAdLocation_bp
 from blueprints.authentication.signup import signUp_bp
 from blueprints.authentication.signin import signIn_bp
+from blueprints.authentication.resetPassword import reset_password_bp
 from blueprints.uploads.upload import upload_bp
 from blueprints.graphViewer.averagePrice import averageSale_bp
 from blueprints.graphViewer.ad_distribution import adDistribution_bp
@@ -38,6 +39,7 @@ CORS(app)
 app.register_blueprint(recentAdLocation_bp)
 app.register_blueprint(signUp_bp)
 app.register_blueprint(signIn_bp)
+app.register_blueprint(reset_password_bp)
 app.register_blueprint(upload_bp)
 app.register_blueprint(averageSale_bp)
 app.register_blueprint(adDistribution_bp)
