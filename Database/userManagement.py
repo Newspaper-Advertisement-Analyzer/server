@@ -18,7 +18,7 @@ def getAllUsers(dbName=db):
 
 def getUserByID(id, dbName=db):
     user = None
-    user = dbName.User.find_one({"password": 0})
+    user = dbName.User.find_one({"_id": ObjectId(id)}, {"password": 0})
     return user
 
 
@@ -26,3 +26,9 @@ def updateUserById(id, update_data, dbName=db):
     result = dbName.User.update_one(
         {"_id": ObjectId(id)}, {"$set": update_data}, upsert=False)
     return result.modified_count > 0
+
+
+def getUserByIDPass(id, dbName=db):
+    user = None
+    user = dbName.User.find_one({"_id": ObjectId(id)})
+    return user

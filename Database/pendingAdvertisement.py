@@ -4,7 +4,6 @@ from bson import ObjectId
 
 def getAllPendingAds(dbName=db):
     ads = list(dbName.Pending_Advertisement.find({}, {"_id": 0}))
-    print(ads)
     return ads
 
 
