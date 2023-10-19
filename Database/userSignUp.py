@@ -55,3 +55,12 @@ def validate_user(email, password, dbName=db):
 def countUers(dbName=db):
     count = dbName.User.count_documents({})
     return count
+
+def replace_password(email, new_password, dbName=db):
+    hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    try:
+        dbName.User.update_one({"Email": email}, {"$set": {"password": hashed_password}})
+        return True
+    except Exception as e:
+        print(e)
+        return False
