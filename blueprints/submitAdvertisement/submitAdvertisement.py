@@ -10,6 +10,7 @@ advertisement_bp = Blueprint("advertisement", __name__)
 def submit_advertisement():
     try:
         data = request.get_json()
+        print(data)
         category = data.get("category")
 
         if category == "Land Sale":
@@ -20,7 +21,7 @@ def submit_advertisement():
                                                    "postedOn"), data.get("source"),
                                                data.get("phoneNumbers"), data.get(
                                                    "email"), data.get("nearestCity"),
-                                               data.get("address"), data.get("landMarks"))
+                                               data.get("address"), data.get("landMarks"), data.get("longitude"), data.get("lattitude"))
         elif category == "House Sale":
             result = saveHouseSaleAdvertisement(data.get("title"), data.get("location"), data.get("postedOn"),
                                                 data.get("description"), data.get(
@@ -29,7 +30,7 @@ def submit_advertisement():
                                                     "postedOn"), data.get("source"),
                                                 data.get("phoneNumbers"), data.get(
                                                     "email"), data.get("nearestCity"),
-                                                data.get("address"))
+                                                data.get("address"), data.get("longitude"), data.get("lattitude"))
         elif category == "Marriage Proposals":
             result = saveMarriageProposalAdvertisement(data.get("title"), data.get("location"), data.get("postedOn"),
                                                        data.get("description"), data.get(
@@ -40,7 +41,7 @@ def submit_advertisement():
                                                            "postedOn"), data.get("source"),
                                                        data.get("phoneNumbers"), data.get(
                                                            "email"), data.get("nearestCity"),
-                                                       data.get("address"))
+                                                       data.get("address"), data.get("longitude"), data.get("lattitude"))
 
         if result:
             return jsonify({"message": "Advertisement saved successfully"})

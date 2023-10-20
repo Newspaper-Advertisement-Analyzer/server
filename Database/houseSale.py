@@ -177,6 +177,7 @@ def getLatestHouseSaleAd(limit=3):
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
         "Description": 1,
+        "Image": 1
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
@@ -185,11 +186,10 @@ def getLatestHouseSaleAd(limit=3):
 
     # Convert the cursor to a list of dictionaries
     advertisement = recent_advertisements
-
     return advertisement
 
 
-def saveHouseSaleAdvertisement(title, location, date, description, image, price, numberOfRooms, postedOn, source, phoneNumbers, email, nearestCity, address):
+def saveHouseSaleAdvertisement(title, location, date, description, image, price, numberOfRooms, postedOn, source, phoneNumbers, email, nearestCity, address, longitude, lattitude):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
@@ -206,7 +206,7 @@ def saveHouseSaleAdvertisement(title, location, date, description, image, price,
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": [phoneNumbers], "Email": email},
-            "Location": {"City": nearestCity},
+            "Location": {"City": nearestCity, "Longitude": longitude, "Latitude": lattitude},
             "Address": address,
         })
         return result.inserted_id

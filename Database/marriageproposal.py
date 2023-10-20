@@ -175,6 +175,7 @@ def getLatestMarriageProposalSaleAd(limit=2):
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
         "Description": 1,
+        "Image": 1
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
@@ -187,10 +188,11 @@ def getLatestMarriageProposalSaleAd(limit=2):
     return advertisements
 
 
-def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, requirements, postedOn, source, phoneNumbers, email, nearestCity, address):
+def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, requirements, postedOn, source, phoneNumbers, email, nearestCity, address, longitude, lattitude):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
+        posted_date = datetime.strptime(date, '%Y-%m-%d')
         result = db.Marriage_Proposal.insert_one({
             # Generate a unique ID for the advertisement
             "Advertisement_ID": generate_unique_id(3),
@@ -205,7 +207,7 @@ def saveMarriageProposalAdvertisement(title, location, date, description, image,
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
-            "Location": {"City": nearestCity},
+            "Location": {"City": nearestCity, "Longitude": longitude, "Latitude": lattitude},
             "Address": address,
             "Special_Requirements": requirements
         })
