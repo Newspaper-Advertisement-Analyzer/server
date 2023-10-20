@@ -23,9 +23,17 @@ def getUserByID(id, dbName=db):
 
 
 def updateUserById(id, update_data, dbName=db):
-    result = dbName.User.update_one(
-        {"_id": ObjectId(id)}, {"$set": update_data}, upsert=False)
-    return result.modified_count > 0
+    if 'password' in update_data:
+        if update_data['password'] is None:
+            update_data.pop('password', None)
+            result = dbName.User.update_one(
+                {"_id": ObjectId(id)}, {"$set": update_data}, upsert=False)
+            return False
+        else:
+            result = dbName.User.update_one(
+                {"_id": ObjectId(id)}, {"$set": update_data}, upsert=False)
+            return result.modified_count > 0
+    return False
 
 
 def getUserByIDPass(id, dbName=db):

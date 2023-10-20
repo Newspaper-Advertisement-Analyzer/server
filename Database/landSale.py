@@ -159,6 +159,7 @@ def getLatestLandSaleAd(limit=3):
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
         "Description": 1,
+        "Image": 1
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
@@ -171,7 +172,7 @@ def getLatestLandSaleAd(limit=3):
     return advertisements
 
 
-def saveLandSaleAdvertisement(title, location, date, description, image, pricePerPerch, numberOfPerches, postedOn, source, phoneNumbers, email, nearestCity, address, landMarks):
+def saveLandSaleAdvertisement(title, location, date, description, image, pricePerPerch, numberOfPerches, postedOn, source, phoneNumbers, email, nearestCity, address, landMarks, longitude, lattitude):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
@@ -188,7 +189,7 @@ def saveLandSaleAdvertisement(title, location, date, description, image, pricePe
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
-            "Location": {"City": nearestCity},
+            "Location": {"City": nearestCity, "Longitude": longitude, "Latitude": lattitude},
             "Address": address,
             "Special_Landmarks": landMarks
         })

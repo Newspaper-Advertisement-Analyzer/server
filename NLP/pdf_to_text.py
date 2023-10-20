@@ -1,7 +1,7 @@
 import pytesseract
 from PIL import Image
 import PyPDF2
-# import fitz  # PyMuPDF
+import fitz  # PyMuPDF
 
 
 def extract_text_from_image(image_path):
