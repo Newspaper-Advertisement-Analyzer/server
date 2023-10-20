@@ -177,6 +177,7 @@ def getLatestHouseSaleAd(limit=3):
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
         "Description": 1,
+        "Image": 1
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
@@ -185,7 +186,6 @@ def getLatestHouseSaleAd(limit=3):
 
     # Convert the cursor to a list of dictionaries
     advertisement = recent_advertisements
-
     return advertisement
 
 

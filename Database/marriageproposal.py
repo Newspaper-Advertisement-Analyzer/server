@@ -175,6 +175,7 @@ def getLatestMarriageProposalSaleAd(limit=2):
         "Price_per_Perch": 1,
         "Number_of_Perch": 1,
         "Description": 1,
+        "Image": 1
     }
 
     # Sort the documents by the 'Posted_Date' field in descending order to get the most recent ones first
@@ -191,6 +192,7 @@ def saveMarriageProposalAdvertisement(title, location, date, description, image,
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
+        posted_date = datetime.strptime(date, '%Y-%m-%d')
         result = db.Marriage_Proposal.insert_one({
             # Generate a unique ID for the advertisement
             "Advertisement_ID": generate_unique_id(3),

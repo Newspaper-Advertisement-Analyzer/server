@@ -6,6 +6,7 @@ from Database.advertisementSearch import searchADbyID
 
 popularAd_bp = Blueprint("popularAd", __name__)
 
+
 @popularAd_bp.route('/getPopularAd', methods=['GET'])
 def getPopularAds():
     land_sale_ad = getLatestLandSaleAd()
@@ -16,7 +17,10 @@ def getPopularAds():
     categorized_ads = []
     for ad_data, category in [(land_sale_ad, "Land Sale"), (house_sale_ad, "House Sale"), (marriage_proposal_ad, "Marriage Proposal")]:
         for ad in ad_data:
-            categorized_ads.append({"Advertisement_ID": ad["Advertisement_ID"], "category": category, "Title": ad["Title"], "Description": ad["Description"]})
+            if "Image" not in ad or not ad["Image"]:
+                ad["Image"] = ""
+            categorized_ads.append({"Advertisement_ID": ad["Advertisement_ID"], "category": category,
+                                   "Title": ad["Title"], "Description": ad["Description"], "Image": ad["Image"]})
 
     return jsonify(categorized_ads)
 
@@ -31,5 +35,3 @@ def searchAdDetails():
     elif adverisementID[2] == "3":
         data = searchADbyID(adverisementID, "Marriage_Proposal")
     return jsonify(data)
-    
- 
