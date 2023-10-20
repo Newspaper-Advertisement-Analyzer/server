@@ -189,7 +189,7 @@ def getLatestHouseSaleAd(limit=3):
     return advertisement
 
 
-def saveHouseSaleAdvertisement(title, location, date, description, image, price, numberOfRooms, postedOn, source, phoneNumbers, email, nearestCity, address):
+def saveHouseSaleAdvertisement(title, location, date, description, image, price, numberOfRooms, postedOn, source, phoneNumbers, email, nearestCity, address, longitude, lattitude):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
@@ -206,7 +206,7 @@ def saveHouseSaleAdvertisement(title, location, date, description, image, price,
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": [phoneNumbers], "Email": email},
-            "Location": {"City": nearestCity},
+            "Location": {"City": nearestCity, "Longitude": longitude, "Latitude": lattitude},
             "Address": address,
         })
         return result.inserted_id

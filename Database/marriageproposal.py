@@ -187,7 +187,7 @@ def getLatestMarriageProposalSaleAd(limit=2):
     return advertisements
 
 
-def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, requirements, postedOn, source, phoneNumbers, email, nearestCity, address):
+def saveMarriageProposalAdvertisement(title, location, date, description, image, gender, age, profession, nationality, requirements, postedOn, source, phoneNumbers, email, nearestCity, address, longitude, lattitude):
     # Implement the logic to save land sale advertisements in the database
     # Example code:
     try:
@@ -205,7 +205,7 @@ def saveMarriageProposalAdvertisement(title, location, date, description, image,
             "Posted_On": postedOn,
             "Source": source,
             "Contact_Info": {"Phone_Number": phoneNumbers, "Email": email},
-            "Location": {"City": nearestCity},
+            "Location": {"City": nearestCity, "Longitude": longitude, "Latitude": lattitude},
             "Address": address,
             "Special_Requirements": requirements
         })
