@@ -31,7 +31,11 @@ def update_user():
                 update_data["password"] = hashed_password
                 password_updated = True
 
-        if updateUserById(user_id, update_data):
+        if updateUserById(user_id, {
+            "Full_Name": data.get("fullName"),
+            "Contact_Number": data.get("mobile"),
+            "Profession": data.get("profession"),
+        }):
             if password_updated:
                 return jsonify({"message": "User information updated successfully", "password_updated": True})
             else:
