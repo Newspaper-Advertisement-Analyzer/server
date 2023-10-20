@@ -5,6 +5,8 @@ from sendEmail.sendVerificstionCode import send_advanced_email
 import random
 from bson.objectid import ObjectId
 
+from sendEmail.sendEmail import send_email
+
 verification_codes = {}
 pending_registrations = {}
 
@@ -36,6 +38,7 @@ def signup():
 
     # send email to the user
     # send_advanced_email(email, verification_code)
+    send_email(email, verification_code)
 
     return jsonify({"message": "Verification code sent."})
 
