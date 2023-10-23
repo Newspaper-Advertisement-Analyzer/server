@@ -46,12 +46,4 @@ for i in range(len(future_df)):
     combined_df['Price'].iloc[len(
         df) + i] = combined_df['Price'].iloc[len(df) + i - 1] + 100000
 
-# Plot the forecasted prices
-# plt.figure(figsize=(12, 6))
-# combined_df['Price'].plot(label='Forecasted Prices', linestyle='dashed')
-# plt.title('House Prices Forecast for the Next 5 Weeks')
-# plt.xlabel('Date')
-# plt.ylabel('Price')
-# plt.legend()
-# plt.grid(True)
-# plt.show()
+

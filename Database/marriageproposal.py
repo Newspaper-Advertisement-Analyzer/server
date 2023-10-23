@@ -197,7 +197,7 @@ def saveMarriageProposalAdvertisement(title, location, date, description, image,
             # Generate a unique ID for the advertisement
             "Advertisement_ID": generate_unique_id(3),
             "Title": title,
-            "Posted_Date": date,
+            "Posted_Date": posted_date,
             "Description": description,
             "Image": image,
             "Gender": gender,
