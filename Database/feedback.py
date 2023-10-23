@@ -52,5 +52,6 @@ def getAllPublishedFeedbacks():
         if user:
             feedback["user_name"] = user["Full_Name"]
             feedback["user_email"] = user["Email"]
+            feedback["Full_Name"] = user["Full_Name"]
 
     return published_feedbacks
