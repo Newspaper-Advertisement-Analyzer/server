@@ -14,7 +14,7 @@ def search_recent_ads():
     start_Date = convert_date_format(request.args.get('startDate'))
     end_date = convert_date_format(request.args.get('endDate'))
     category = request.args.get('category')
-    print(selected_option, search_query, start_Date, end_date, category)
+
     if not selected_option:
         return jsonify({"error": "Missing search criteria"}), 400
 

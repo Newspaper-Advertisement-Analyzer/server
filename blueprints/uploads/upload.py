@@ -8,11 +8,7 @@ from NLP.pdf_to_text import pdftotext
 from NLP.pdf_to_text import pdftotext_ocr
 from NLP.webScraper import extract_category
 from Database.pendingAdvertisement import add_pending_advertisement
-
-# import threading
 from NLP.webScraper import extract_article_info
-# from flask import Flask, make_response, send_from_directory
-# from NLP.oldwebScaper import extract_article_text
 from NLP.webScraper import extract_article_info
 from NLP.webScraper import extract_url
 from werkzeug.utils import secure_filename
@@ -26,8 +22,6 @@ def members():
     inp = request.json.get("inp")
     print("link is ", inp)  # this is the URl
     try:
-        # article_data = scrape_article_data(inp)
-        # print("link is ",article_data) this is wrong
 
         print("analyze_advertisement is going to run")
 
@@ -69,7 +63,6 @@ def receive_url_from_frontend():
     data = request.get_json()
     url = data.get('url')
     isPublished = data.get('publish')
-    print("isPublished", isPublished)
     article = extract_url(url)
     category = extract_category(article)
     if (category != "Marriage Proposals"):
@@ -128,7 +121,6 @@ def allowed_pdf(filename):
 @upload_bp.route('/uploadpdf', methods=['POST'])
 def upload_pdf():
     isImageContained = request.args.get('isImageContained')
-    print(isImageContained)
 
     if 'pdfs' not in request.files:
         return jsonify({'error': 'No pdfs part'})
@@ -156,6 +148,5 @@ def upload_pdf():
         else:
             extracted_text = (pdftotext(os.path.join(upload_folder, filename)))
 
-        print(extracted_text)
         result.append(analyze_advertisement_img(extracted_text))
     return jsonify({'message': result})
