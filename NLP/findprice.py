@@ -14,16 +14,17 @@ def identify_price(text):
     for pattern in price_patterns:
         matches = re.findall(pattern, text, re.IGNORECASE)
         for match in matches:
-            # Handle commas and convert to float
-            price_value = float(match.replace(',', ''))
-            
-            # Check context for 'million' or 'lakh' and adjust the price accordingly
-            if 'million' in pattern.lower() or 'mn' in pattern.lower():
-                price_value *= 1000000  # Convert million to base currency
-            elif 'lakh' in pattern.lower():
-                price_value *= 100000  # Convert lakh to base currency
+            if match:  # Check if match is not an empty string
+                # Handle commas and convert to float
+                price_value = float(match.replace(',', ''))
+                
+                # Check context for 'million' or 'lakh' and adjust the price accordingly
+                if 'million' in pattern.lower() or 'mn' in pattern.lower():
+                    price_value *= 1000000  # Convert million to base currency
+                elif 'lakh' in pattern.lower():
+                    price_value *= 100000  # Convert lakh to base currency
 
-            prices.append(("LKR", price_value))
+                prices.append(("LKR", price_value))
 
     if len(prices) == 0:
         return "No price found"
