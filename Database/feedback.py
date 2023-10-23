@@ -42,6 +42,8 @@ def getAllPublishedFeedbacks():
     # Convert the ObjectId to string for each document
     for feedback in published_feedbacks:
         feedback["_id"] = str(feedback["_id"])
+        feedback["timestamp"] = feedback["timestamp"].strftime(
+            "%Y-%m-%dT%H:%M:%S")
 
         # Get the user details based on the userID
         user = db.User.find_one({"_id": ObjectId(feedback["userID"])})
