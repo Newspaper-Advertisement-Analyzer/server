@@ -7,11 +7,6 @@ from NLP.pdf_to_text import pdftotext
 from NLP.pdf_to_text import pdftotext_ocr
 from NLP.webScraper import extract_category
 from Database.pendingAdvertisement import add_pending_advertisement
-<<<<<<< Updated upstream
-from NLP.webScraper import extract_article_info
-=======
-
->>>>>>> Stashed changes
 from NLP.webScraper import extract_article_info
 from NLP.webScraper import extract_url
 from werkzeug.utils import secure_filename
@@ -25,10 +20,6 @@ def members():
     inp = request.json.get("inp")
     print("link is ", inp)  # this is the URl
     try:
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         print("analyze_advertisement is going to run")
 
         location, category, contact_info, prices = analyze_advertisement(inp)
