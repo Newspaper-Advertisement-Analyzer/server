@@ -2,7 +2,7 @@ from flask import Blueprint, Flask, request, jsonify
 
 from Database.userSignUp import find_user, replace_password
 from datetime import datetime, timedelta
-from sendEmail.sendVerificstionCode import send_advanced_email
+from sendEmail.sendResetCode import send_reset_code
 import random
 
 reset_password_bp = Blueprint("resetPSW", __name__)
@@ -34,6 +34,7 @@ def reset_password():
 
         # send email to the user
         # send_advanced_email(email, verification_code)
+        send_reset_code(email, verification_code)
 
         return jsonify({"message": "Verification code sent."})
 
@@ -56,6 +57,7 @@ def verify():
             print("Verification successful")
             new_password = random.randint(100000, 999999)
             replace_password(email, str(new_password))
+            print("New password:", new_password)
             return jsonify({"success": True, "newpassword": new_password})
         else:
             del pending_registrations[email]

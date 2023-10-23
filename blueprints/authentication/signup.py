@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime, timedelta
 from Database.userSignUp import add_user, find_user, validate_user
-from sendEmail.sendVerificstionCode import send_advanced_email
 import random
 from bson.objectid import ObjectId
 
