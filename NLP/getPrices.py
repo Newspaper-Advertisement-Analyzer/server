@@ -23,17 +23,9 @@ def extract_price(text):
         price_value = float(usd_price[0])
         prices.append(("USD", price_value))
 
-    # print(text)
-    # print(prices)
 
     if len(prices) == 0:
         return None
     
     return prices[0] #_________________________________change this later
 
-
-
-#________Test___________________________
-# price = extract_price(" for Three Vehicles, Pantry, Wet Kitchen. 33 M 0773033852.")
-
-# print(price)

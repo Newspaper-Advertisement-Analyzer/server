@@ -18,8 +18,7 @@ def extract_locations(given_text):
 
     matching_cities = set()
 
-    # To capitalize the first letter of each word
-    given_text = given_text.title()
+    given_text = given_text.title() # To capitalize the first letter of each word
 
     for _, city in automaton.iter(given_text):
         print("City--------->", city)
@@ -30,6 +29,3 @@ def extract_locations(given_text):
 
     return list(matching_cities)
 
-
-# Test
-# print(extract_locations("I live in New York, welimada, Badulla"))

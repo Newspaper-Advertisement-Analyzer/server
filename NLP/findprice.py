@@ -32,16 +32,3 @@ def identify_price(text):
     prices.sort(key=lambda x: x[1], reverse=True)
     
     return prices[0]
-
-
-
-
-
-
-# ==================Test==================
-
-# price = identify_price('''District - Colombo
-# City - Bokundara
-# Price : Rs.33,000,000''')
-
-# print(price)

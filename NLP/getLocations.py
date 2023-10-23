@@ -1,6 +1,5 @@
 import pickle
 
-
 def cities_generator(filename):
     with open(filename, 'r') as file:
         for line in file:
@@ -23,6 +22,8 @@ def extract_locations(given_text):
     automaton = initialize_automaton('cities.pkl')
 
     matching_cities = set()
+
+    given_text = given_text.title() # To capitalize the first letter of each word
 
     for _, city in automaton.iter(given_text):
         matching_cities.add(city)

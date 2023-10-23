@@ -3,12 +3,6 @@ from newspaper import Article
 import requests
 from bs4 import BeautifulSoup
 
-# from nlp.findlocations import extract_addresses_with_geocoding
-# from nlp.findcatogory import identify_catogory
-# from nlp.findprice import identify_price
-# from nlp.findcontacts import extract_contacts
-
-
 
 def extract_article_text(url):
     # Create an Article object
@@ -35,14 +29,6 @@ def extract_article_text(url):
     # Extract keywords
     keywords = article.keywords
 
-
-    # locations = extract_addresses_with_geocoding(text)
-    # catogory = identify_catogory(text)
-    # price = identify_price(text)
-    # contact = extract_contacts(text)
-
-    # return title, text, summary, keywords, catogory, price, contact, locations
-    # return summary, title, text, keywords, locations, catogory, price, contact
     return text
 
 
@@ -68,5 +54,3 @@ def extract_paragraphs_and_list_items(url):
         return None
 
 
-#_____________Testing____________________ 
-# print(extract_paragraphs_and_list_items("https://www.hitad.lk/en/ad/1774879-Piliyandala-Bokundara-House-for-Sale?type=houses"))

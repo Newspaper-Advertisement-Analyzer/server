@@ -17,5 +17,3 @@ def extract_phone_num(text):
 
     return ', '.join(phone_numbers)
 
-
-# print(extract_phone_num(" Colombo-05 (off Jawatta Rd) 15.50 Parches F/Road side, Rectangle Land with 03 Houses 255 m (Negotiable) 0772456189" ))

@@ -15,8 +15,3 @@ def get_Phone_Numbers(text,url):
         else:
             return "No phone number found"
 
-
-
-
-#________Test___________________________
-# print(get_Phone_Numbers(" for Three Vehicles, Pantry, Wet Kitchen. 33 M 0773033852.","sgfj"))
