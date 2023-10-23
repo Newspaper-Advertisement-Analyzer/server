@@ -27,7 +27,6 @@ etelemetry==0.3.0
 feedfinder2==0.0.4
 feedparser==6.0.10
 filelock==3.12.2
-fitz==0.0.1.dev2
 Flask==2.3.2
 Flask-Bcrypt==1.0.1
 Flask-Cors==4.0.0
