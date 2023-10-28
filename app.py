@@ -23,7 +23,7 @@ from blueprints.feedback.submitFeedback import feedback_bp
 from blueprints.manageUser.updateUser import updateUser_bp
 from blueprints.pendingAdvertisement.pendingAdvertisement import getPendingAdvertisement_bp
 from blueprints.submitAdvertisement.submitAdvertisement import advertisement_bp
-from blueprints.graphViewer.prediction import forecastedPrices_bp
+
 # Import other necessary modules
 from datetime import datetime, timedelta
 import random
@@ -57,7 +57,7 @@ app.register_blueprint(feedback_bp)
 app.register_blueprint(updateUser_bp)
 app.register_blueprint(getPendingAdvertisement_bp)
 app.register_blueprint(advertisement_bp)
-app.register_blueprint(forecastedPrices_bp)
+
 
 # Configure any app-specific settings here
 app.config['UPLOAD_FOLDER_IMG'] = 'uploadsimg'

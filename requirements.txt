@@ -17,6 +17,7 @@ confection==0.1.0
 configobj==5.0.8
 configparser==6.0.0
 cors==1.0.1
+cryptography==41.0.4
 cssselect==1.2.0
 cymem==2.0.7
 distlib==0.3.6
@@ -31,12 +32,14 @@ Flask==2.3.2
 Flask-Bcrypt==1.0.1
 Flask-Cors==4.0.0
 frontend==0.0.3
+fsspec==2023.9.2
 future==0.18.3
 gevent==23.9.1
 greenlet==3.0.0
 gunicorn==21.2.0
 h11==0.14.0
 httplib2==0.22.0
+huggingface-hub==0.17.3
 idna==3.4
 iniconfig==2.0.0
 isodate==0.6.1
@@ -61,6 +64,8 @@ packaging==23.1
 pandas==2.1.0
 pathlib==1.0.1
 pathy==0.10.2
+pdf2image==1.16.3
+pdfminer.six==20221105
 pdfplumber==0.10.2
 pep8==1.7.1
 phonenumbers==8.13.17
@@ -76,10 +81,11 @@ pycparser==2.21
 pydantic==1.10.12
 pydot==1.4.2
 pymongo==4.4.1
-PyMuPDF==1.23.0
-PyMuPDFb==1.23.0
+PyMuPDF==1.23.5
+PyMuPDFb==1.23.5
 pyparsing==3.1.1
 PyPDF2==3.0.1
+pypdfium2==4.22.0
 PySocks==1.7.1
 pytesseract==0.3.10
 pytest==7.4.2
@@ -92,6 +98,7 @@ rdflib==7.0.0
 regex==2023.6.3
 requests==2.31.0
 requests-file==1.5.1
+safetensors==0.4.0
 scipy==1.11.2
 sentinels==1.0.0
 sgmllib3k==1.0.0
@@ -109,8 +116,10 @@ starlette==0.31.1
 thinc==8.1.10
 tinysegmenter==0.3
 tldextract==3.4.4
+tokenizers==0.14.1
 tqdm==4.65.0
 traits==6.3.2
+transformers==4.34.0
 typer==0.9.0
 typing_extensions==4.7.1
 tzdata==2023.3
